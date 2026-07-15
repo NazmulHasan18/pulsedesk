@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f5f1;
+  --surface: #fffefb;
+  --ink: #14171c;
+  --muted: #656a74;
+  --line: #e6e3da;
+  --line-strong: #cfccc0;
+
+  --indigo: #4b4fe0;
+  --indigo-dark: #3638b8;
+  --indigo-tint: #eceafd;
+
+  --signal: #1f9d68;
+  --signal-tint: #e2f5ea;
+  --signal-ink: #157a50;
+
+  --amber: #d98a1f;
+  --amber-tint: #fbedd8;
+  --amber-ink: #9c6413;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-indigo: var(--indigo);
+  --color-signal: var(--signal);
+  --color-amber: var(--amber);
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+.animate-accordion-down { animation: accordion-down 0.25s ease-out; }
+.animate-accordion-up { animation: accordion-up 0.25s ease-out; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  80%, 100% { transform: scale(1.9); opacity: 0; }
+}
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: pulse-ring 2s cubic-bezier(0.2, 0.7, 0.4, 1) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.caret-blink { animation: caret-blink 1s step-end infinite; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 28s linear infinite; }
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(20,23,28,0.06) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+::selection {
+  background: var(--indigo);
+  color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
