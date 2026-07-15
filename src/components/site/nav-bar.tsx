@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const links = [
   { href: "#how-it-works", label: "How it works" },
@@ -47,12 +48,17 @@ export function NavBar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#" className="hidden text-sm font-medium text-ink hover:text-indigo sm:inline-block">
+          <Link
+            href="/login"
+            className="hidden text-sm font-medium text-ink hover:text-indigo sm:inline-block"
+          >
             Log in
-          </a>
-          <Button variant="primary" size="sm">
-            Start for free
-          </Button>
+          </Link>
+          <Link href="/signup">
+            <Button variant="primary" size="sm">
+              Start for free
+            </Button>
+          </Link>
         </div>
       </div>
     </header>

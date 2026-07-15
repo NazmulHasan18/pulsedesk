@@ -10,20 +10,26 @@ import { CtaSection } from "@/components/site/cta-section";
 import { Footer } from "@/components/site/footer";
 
 export default function Home() {
+  const user = null;
   return (
-    <div className="min-h-screen">
-      <NavBar />
-      <main>
-        <Hero />
-        <HowItWorks />
-        <EmbedSection />
-        <Features />
-        <DashboardPreview />
-        <StatsSection />
-        <FaqSection />
-        <CtaSection />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <div className="min-h-screen">
+        <NavBar />
+        <main>
+          <Hero />
+          <HowItWorks />
+          <EmbedSection />
+          <Features />
+          <DashboardPreview />
+          <StatsSection />
+          <FaqSection />
+          <CtaSection />
+        </main>
+        <Footer />
+      </div>
+      {user && (
+        <script src="https://pulsedesk-jet.vercel.app/widget.js" data-site-id="pulsedesk" async></script>
+      )}
+    </>
   );
 }
