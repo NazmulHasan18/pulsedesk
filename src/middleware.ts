@@ -21,14 +21,12 @@ export default withAuth(
 
         if (!isDashboardRoute && !isPlatformRoute) return true;
         if (!isLoggedIn) return false;
-
+        // !commented for future use if need
         // const userType = token?.userType;
-        // console.log({ userType });
 
-        // // superadmin has no business in the company dashboard, and vice versa
         // if (isPlatformRoute && userType !== "superadmin") return false;
         // if (isDashboardRoute && userType === "superadmin") return false;
-        // console.log("pass the line");
+
         return true;
       },
     },
