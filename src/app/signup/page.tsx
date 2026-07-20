@@ -57,11 +57,11 @@ export default function SignupPage() {
     <AuthShell
       eyebrow="Get started"
       title="Create your PulseDesk workspace"
-      subtitle="Set up your team's live chat in minutes — the widget and AI fallback ship on your first FAQ import."
+      subtitle="Set up your team's live chat in minutes - the widget and AI fallback ship on your first FAQ import."
       footer={
         <>
           Already have a workspace?{" "}
-          <Link href="/login" className="font-medium text-indigo hover:text-(--indigo-dark)">
+          <Link href="/login" className="font-medium text-indigo underline-offset-4 hover:underline">
             Sign in
           </Link>
         </>
@@ -138,7 +138,7 @@ export default function SignupPage() {
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-ink"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -166,21 +166,27 @@ export default function SignupPage() {
         </div>
 
         <div>
-          <label className="flex items-start gap-2 text-sm text-muted">
+          <label className="flex items-start gap-2 text-sm text-muted-foreground">
             <input
               type="checkbox"
-              className="mt-0.5 h-4 w-4 rounded border-(--line-strong) text-indigo focus-visible:ring-(--indigo-tint)"
+              className="mt-0.5 h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-(--indigo-tint)"
               {...register("terms", {
                 required: "You need to accept the terms to continue.",
               })}
             />
             <span>
               I agree to PulseDesk&apos;s{" "}
-              <Link href="/terms" className="font-medium text-ink underline">
+              <Link
+                href="/terms"
+                className="font-medium text-foreground underline-offset-4 hover:text-indigo hover:underline"
+              >
                 Terms of Service
               </Link>{" "}
               and{" "}
-              <Link href="/privacy" className="font-medium text-ink underline">
+              <Link
+                href="/privacy"
+                className="font-medium text-foreground underline-offset-4 hover:text-indigo hover:underline"
+              >
                 Privacy Policy
               </Link>
               .

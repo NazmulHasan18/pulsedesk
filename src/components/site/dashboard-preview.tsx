@@ -36,7 +36,7 @@ export function DashboardPreview() {
           <div className="grid gap-6 rounded-2xl border border-line bg-surface p-8 lg:grid-cols-2">
             <div>
               <h3 className="font-display text-xl font-medium">Match the widget to your brand</h3>
-              <p className="mt-2 text-sm text-muted leading-relaxed">
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                 Set accent color, welcome message, and corner position — changes reflect on your live site
                 instantly, no redeploy needed.
               </p>
@@ -46,14 +46,14 @@ export function DashboardPreview() {
                     {["#4B4FE0", "#1F9D68", "#D98A1F", "#14171C"].map((c) => (
                       <span
                         key={c}
-                        className="h-7 w-7 rounded-full border-2 border-white shadow ring-1 ring-line"
+                        className="h-7 w-7 rounded-full border-2 border-background shadow ring-1 ring-line"
                         style={{ background: c }}
                       />
                     ))}
                   </div>
                 </Field>
                 <Field label="Welcome message">
-                  <div className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-muted">
+                  <div className="rounded-lg border border-line bg-surface px-3 py-2 text-sm text-muted-foreground">
                     Hi! Ask us anything about your order.
                   </div>
                 </Field>
@@ -67,8 +67,8 @@ export function DashboardPreview() {
                 </Field>
               </div>
             </div>
-            <div className="flex items-center justify-center rounded-xl bg-[#fbfaf7] p-6">
-              <div className="w-full max-w-55 rounded-xl border border-line bg-white p-3 shadow-lg">
+            <div className="flex items-center justify-center rounded-xl bg-paper p-6">
+              <div className="w-full max-w-55 rounded-xl border border-line bg-surface p-3 shadow-lg">
                 <div className="mb-2 h-6 w-full rounded-md bg-indigo" />
                 <div className="space-y-1.5">
                   <div className="h-2 w-3/4 rounded-full bg-line" />
@@ -82,11 +82,11 @@ export function DashboardPreview() {
         <TabsContent value="faq">
           <div className="rounded-2xl border border-line bg-surface p-8">
             <h3 className="font-display text-xl font-medium">Your knowledge base, searchable by meaning</h3>
-            <p className="mt-2 max-w-lg text-sm text-muted leading-relaxed">
+            <p className="mt-2 max-w-lg text-sm text-muted-foreground leading-relaxed">
               Add a doc, and it&apos;s embedded automatically. The AI matches on intent, not keywords —
               &quot;where&apos;s my package&quot; finds your shipping FAQ even without those words.
             </p>
-            <div className="mt-6 divide-y divide-line rounded-xl border border-line bg-white">
+            <div className="mt-6 divide-y divide-line rounded-xl border border-line bg-surface">
               {[
                 { q: "What's your return policy?", tag: "Returns", matches: 128 },
                 { q: "How long does shipping take?", tag: "Shipping", matches: 96 },
@@ -94,7 +94,7 @@ export function DashboardPreview() {
               ].map((row) => (
                 <div key={row.q} className="flex items-center justify-between gap-4 px-5 py-3.5 text-sm">
                   <span className="font-medium">{row.q}</span>
-                  <div className="flex items-center gap-3 text-xs text-muted">
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
                     <span className="rounded-full bg-(--indigo-tint) px-2.5 py-1 text-indigo">{row.tag}</span>
                     <span>{row.matches} matches this month</span>
                   </div>
@@ -107,7 +107,7 @@ export function DashboardPreview() {
         <TabsContent value="inbox">
           <div className="rounded-2xl border border-line bg-surface p-8">
             <h3 className="font-display text-xl font-medium">Claim, don&apos;t get assigned</h3>
-            <p className="mt-2 max-w-lg text-sm text-muted leading-relaxed">
+            <p className="mt-2 max-w-lg text-sm text-muted-foreground leading-relaxed">
               Every open conversation sits in a shared queue with an AI-drafted reply attached. Agents claim
               what they can take on.
             </p>
@@ -117,9 +117,9 @@ export function DashboardPreview() {
                 { name: "Unassigned — sizing help", wait: "40s wait", draft: true },
                 { name: "Sam — shipping delay", wait: "5m wait", draft: false },
               ].map((row) => (
-                <div key={row.name} className="rounded-xl border border-line bg-white p-4">
+                <div key={row.name} className="rounded-xl border border-line bg-surface p-4">
                   <div className="text-sm font-medium">{row.name}</div>
-                  <div className="mt-1 text-xs text-muted">{row.wait}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{row.wait}</div>
                   {row.draft && (
                     <div className="mt-3 rounded-lg bg-(--amber-tint) px-2.5 py-1.5 text-[11px] text-(--amber-ink)">
                       AI draft ready
@@ -141,7 +141,7 @@ export function DashboardPreview() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <div className="mb-1.5 text-xs font-medium text-muted">{label}</div>
+      <div className="mb-1.5 text-xs font-medium text-muted-foreground">{label}</div>
       {children}
     </div>
   );

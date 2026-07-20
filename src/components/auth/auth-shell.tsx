@@ -90,59 +90,66 @@ export function AuthShell({
   footer: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-paper">
-      {/* Brand / signature panel */}
-      <div className="relative hidden w-[42%] flex-col justify-between overflow-hidden bg-ink px-10 py-10 lg:flex">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-            backgroundSize: "24px 24px",
-          }}
-          aria-hidden
-        />
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(75,79,224,0.12),transparent_35%),linear-gradient(180deg,var(--paper),var(--paper))] text-foreground">
+      <div className="grid min-h-screen lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+        {/* Brand / signature panel */}
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-[linear-gradient(180deg,var(--brand-panel),var(--brand-panel-2))] px-10 py-10 text-white lg:flex">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+              backgroundSize: "24px 24px",
+            }}
+            aria-hidden
+          />
 
-        <Link
-          href="/"
-          className="relative z-10 flex items-center gap-2 font-display text-lg font-medium text-white"
-        >
-          <MessageCircle className="h-5 w-5" style={{ color: "var(--amber)" }} />
-          PulseDesk
-        </Link>
-
-        <div className="relative z-10 max-w-sm">
-          <p className="text-sm font-medium uppercase tracking-wider text-white/50">{eyebrow}</p>
-          <h1 className="mt-3 font-display text-3xl font-medium leading-tight text-white">{title}</h1>
-          <p className="mt-3 text-sm leading-relaxed text-white/60">{subtitle}</p>
-
-          <div className="mt-8">
-            <ResolutionThread />
-          </div>
-        </div>
-
-        <p className="relative z-10 text-xs text-white/35">
-          One conversation. A human agent or an instant AI answer &mdash; your customer never has to know
-          which.
-        </p>
-      </div>
-
-      {/* Form panel */}
-      <div className="flex w-full flex-1 flex-col justify-center px-6 py-12 sm:px-12 lg:w-[58%] lg:px-20">
-        <div className="mx-auto w-full max-w-sm">
           <Link
             href="/"
-            className="mb-8 flex items-center gap-2 font-display text-lg font-medium text-ink lg:hidden"
+            className="relative z-10 flex items-center gap-2 font-display text-lg font-medium text-white"
           >
             <MessageCircle className="h-5 w-5" style={{ color: "var(--amber)" }} />
             PulseDesk
           </Link>
 
-          <h2 className="font-display text-2xl font-medium text-ink">{title}</h2>
-          <p className="mt-1.5 text-sm text-muted">{subtitle}</p>
+          <div className="relative z-10 max-w-sm">
+            <p className="text-sm font-medium uppercase tracking-wider text-white/50">{eyebrow}</p>
+            <h1 className="mt-3 font-display text-3xl font-medium leading-tight text-white">{title}</h1>
+            <p className="mt-3 text-sm leading-relaxed text-white/60">{subtitle}</p>
 
-          <div className={cn("mt-8")}>{children}</div>
+            <div className="mt-8">
+              <ResolutionThread />
+            </div>
+          </div>
 
-          <div className="mt-6 text-sm text-muted">{footer}</div>
+          <p className="relative z-10 text-xs text-white/35">
+            One conversation. A human agent or an instant AI answer - your customer never has to know which.
+          </p>
+        </div>
+
+        {/* Form panel */}
+        <div className="flex items-center justify-center px-6 py-10 sm:px-10 lg:px-8 lg:py-8">
+          <div className="relative w-full max-w-124 overflow-hidden rounded-[2rem] border border-line/70 bg-surface/95 px-6 py-8 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-sm sm:px-8 sm:py-10">
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--indigo),transparent)] opacity-60"
+            />
+
+            <Link
+              href="/"
+              className="mb-8 inline-flex items-center gap-2 font-display text-lg font-medium text-foreground lg:hidden"
+            >
+              <MessageCircle className="h-5 w-5" style={{ color: "var(--amber)" }} />
+              PulseDesk
+            </Link>
+
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted-foreground">{eyebrow}</p>
+            <h2 className="mt-3 font-display text-2xl font-medium tracking-tight text-foreground">{title}</h2>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{subtitle}</p>
+
+            <div className={cn("mt-8")}>{children}</div>
+
+            <div className="mt-6 border-t border-line/70 pt-5 text-sm text-muted-foreground">{footer}</div>
+          </div>
         </div>
       </div>
     </div>

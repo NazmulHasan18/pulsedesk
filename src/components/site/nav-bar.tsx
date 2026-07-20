@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const links = [
   { href: "#how-it-works", label: "How it works" },
@@ -40,7 +41,7 @@ export function NavBar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted transition-colors hover:text-ink"
+              className="text-sm text-muted-foreground transition-colors hover:text-ink"
             >
               {link.label}
             </a>
@@ -48,6 +49,7 @@ export function NavBar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/login"
             className="hidden text-sm font-medium text-ink hover:text-indigo sm:inline-block"
@@ -55,7 +57,7 @@ export function NavBar() {
             Log in
           </Link>
           <Link href="/signup">
-            <Button variant="primary" size="sm">
+            <Button variant="outline" size="sm">
               Start for free
             </Button>
           </Link>

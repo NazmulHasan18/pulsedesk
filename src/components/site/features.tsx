@@ -54,7 +54,7 @@ export function Features() {
         <h2 className="mt-3 font-display text-3xl font-medium tracking-tight sm:text-4xl">
           Built like the tools you already pay for
         </h2>
-        <p className="mt-4 text-muted">
+        <p className="mt-4 text-muted-foreground">
           Everything Intercom or Zendesk gives you for the live-chat piece — without the seat-based pricing.
         </p>
       </div>
@@ -69,7 +69,7 @@ export function Features() {
               <f.icon className="h-5 w-5" />
             </div>
             <h3 className="font-display text-lg font-medium">{f.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
           </Card>
         ))}
       </div>

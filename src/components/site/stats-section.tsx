@@ -23,7 +23,7 @@ export function StatsSection() {
           <h2 className="mt-3 font-display text-3xl font-medium tracking-tight sm:text-4xl">
             See who&apos;s actually answering
           </h2>
-          <p className="mt-4 max-w-md text-muted leading-relaxed">
+          <p className="mt-4 max-w-md text-muted-foreground leading-relaxed">
             Every company&apos;s AI-vs-agent resolution split, usage, and status lives in one panel — so you
             can spot a company that needs more FAQ coverage before they notice it themselves.
           </p>
@@ -35,7 +35,7 @@ export function StatsSection() {
               </span>
               <div>
                 <div className="font-display text-lg font-medium">{AI_SHARE}%</div>
-                <div className="text-xs text-muted">Resolved by AI</div>
+                <div className="text-xs text-muted-foreground">Resolved by AI</div>
               </div>
             </div>
             <div className="flex items-center gap-2.5">
@@ -44,7 +44,7 @@ export function StatsSection() {
               </span>
               <div>
                 <div className="font-display text-lg font-medium">{100 - AI_SHARE}%</div>
-                <div className="text-xs text-muted">Resolved by agents</div>
+                <div className="text-xs text-muted-foreground">Resolved by agents</div>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@ export function StatsSection() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="font-display text-3xl font-semibold">{AI_SHARE}%</span>
-              <span className="text-xs text-muted">AI resolution</span>
+              <span className="text-xs text-muted-foreground">AI resolution</span>
             </div>
           </div>
         </div>

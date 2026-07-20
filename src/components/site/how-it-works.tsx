@@ -50,7 +50,7 @@ export function HowItWorks() {
         <h2 className="mt-3 font-display text-3xl font-medium tracking-tight sm:text-4xl">
           One message, four decisions
         </h2>
-        <p className="mt-4 text-muted">
+        <p className="mt-4 text-muted-foreground">
           This is the actual path a message takes, from the moment it&apos;s typed to the moment your
           knowledge base gets a little smarter.
         </p>
@@ -70,12 +70,12 @@ export function HowItWorks() {
                   : "border-line bg-surface hover:border-(--line-strong)",
               )}
             >
-              <span className={cn("font-mono text-xs", active === i ? "text-white/50" : "text-muted")}>
+              <span className={cn("font-mono text-xs", active === i ? "text-white/50" : "text-muted-foreground")}>
                 {step.n}
               </span>
               <div>
                 <div className="font-display text-base font-medium">{step.title}</div>
-                <div className={cn("mt-0.5 text-xs", active === i ? "text-white/70" : "text-muted")}>
+                <div className={cn("mt-0.5 text-xs", active === i ? "text-white/70" : "text-muted-foreground")}>
                   {step.summary}
                 </div>
               </div>
@@ -99,7 +99,7 @@ export function HowItWorks() {
           <h3 className="font-display text-2xl font-medium">
             {steps[active].n} — {steps[active].title}
           </h3>
-          <p className="mt-3 max-w-lg text-muted leading-relaxed">{steps[active].detail}</p>
+          <p className="mt-3 max-w-lg text-muted-foreground leading-relaxed">{steps[active].detail}</p>
         </motion.div>
       </div>
     </section>

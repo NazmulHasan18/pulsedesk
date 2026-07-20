@@ -14,7 +14,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-(--line-strong) bg-white px-3.5 py-1.5 text-xs font-medium text-muted">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-(--line-strong) bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-signal" />
@@ -44,13 +44,13 @@ export function Hero() {
             when you can&apos;t.
           </h1>
 
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
             One script tag turns your site into a live support desk. Your AI answers from your own FAQs the
             second an agent isn&apos;t around — and drafts the reply when one is.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button variant="primary" size="lg">
+            <Button size="lg">
               Add PulseDesk to your site
               <ArrowRight className="h-4 w-4" />
             </Button>
@@ -59,7 +59,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="mt-10 flex items-center gap-6 border-t border-line pt-6 text-sm text-muted">
+          <div className="mt-10 flex items-center gap-6 border-t border-line pt-6 text-sm text-muted-foreground">
             <div>
               <div className="font-display text-2xl font-semibold text-ink">1 line</div>
               <div>of code to install</div>

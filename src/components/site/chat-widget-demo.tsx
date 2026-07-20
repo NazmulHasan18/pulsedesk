@@ -123,7 +123,7 @@ function Bubble({ beat, isLatest }: { beat: Extract<Beat, { kind: "message" }>; 
             "rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-snug shadow-sm",
             isVisitor
               ? "rounded-br-sm bg-indigo text-white"
-              : "rounded-bl-sm bg-white text-ink border border-line",
+              : "rounded-bl-sm bg-surface text-ink border border-line",
           )}
         >
           {text}
@@ -183,17 +183,17 @@ export function ChatWidgetDemo() {
   return (
     <div className="relative">
       {/* mock browser chrome */}
-      <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_40px_80px_-30px_rgba(20,23,28,0.35)]">
-        <div className="flex items-center gap-1.5 border-b border-line bg-[#fbfaf7] px-4 py-2.5">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_40px_80px_-30px_rgba(20,23,28,0.35)]">
+        <div className="flex items-center gap-1.5 border-b border-line bg-paper px-4 py-2.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#e6a355]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#e4b94f]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#7fb87a]" />
-          <div className="ml-3 flex-1 truncate rounded-md bg-white px-3 py-1 text-[11px] text-muted border border-line">
+          <div className="ml-3 flex-1 truncate rounded-md bg-surface px-3 py-1 text-[11px] text-muted-foreground border border-line">
             khativai.com
           </div>
         </div>
 
-        <div className="relative h-105 bg-linear-to-b from-[#fbfaf7] to-white">
+        <div className="relative h-105 bg-linear-to-b from-paper to-surface">
           {/* faux page content behind widget */}
           <div className="space-y-3 p-6 opacity-70">
             <div className="h-3 w-32 rounded-full bg-line" />
@@ -237,7 +237,7 @@ export function ChatWidgetDemo() {
                           className="flex items-center gap-2"
                         >
                           <Avatar from={beat.from} />
-                          <div className="flex gap-1 rounded-2xl rounded-bl-sm border border-line bg-white px-3.5 py-3">
+                          <div className="flex gap-1 rounded-2xl rounded-bl-sm border border-line bg-surface px-3.5 py-3">
                             {[0, 1, 2].map((d) => (
                               <span
                                 key={d}
@@ -256,7 +256,7 @@ export function ChatWidgetDemo() {
                         animate={{ opacity: 1 }}
                         className="flex justify-center"
                       >
-                        <span className="rounded-full bg-black/5 px-3 py-1 text-[10.5px] font-medium text-muted">
+                        <span className="rounded-full bg-foreground/5 px-3 py-1 text-[10.5px] font-medium text-muted-foreground">
                           {beat.text}
                         </span>
                       </motion.div>
@@ -264,8 +264,8 @@ export function ChatWidgetDemo() {
                   })}
                 </div>
 
-                <div className="flex items-center gap-2 border-t border-line bg-white px-3 py-2.5">
-                  <div className="flex-1 truncate rounded-full bg-black/5 px-3 py-2 text-[12px] text-muted">
+                <div className="flex items-center gap-2 border-t border-line bg-surface px-3 py-2.5">
+                  <div className="flex-1 truncate rounded-full bg-foreground/5 px-3 py-2 text-[12px] text-muted-foreground">
                     Write a message…
                   </div>
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo text-white">
@@ -289,7 +289,7 @@ export function ChatWidgetDemo() {
 
       {/* scenario switcher */}
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-medium text-muted">Try a scenario:</span>
+        <span className="text-xs font-medium text-muted-foreground">Try a scenario:</span>
         {scripts.map((s, i) => (
           <button
             key={s.prompt}

@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormError } from "@/components/ui/form-error";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type LoginFormValues = {
   email: string;
@@ -20,7 +23,7 @@ type LoginFormValues = {
 export default function LoginPage() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [formError, setFormError] = React.useState<string | null>(null);
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -35,7 +38,19 @@ export default function LoginPage() {
     try {
       // TODO: wire up to the real auth endpoint once it exists.
       // await fetch("/api/auth/login", { method: "POST", body: JSON.stringify(values) })
-      await new Promise((resolve) => setTimeout(resolve, 900));
+      // await new Promise((resolve) => setTimeout(resolve, 900));
+      const response = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+      console.log(response);
+      if (response?.error) {
+        toast.error(response?.error || "Invalid email or password.");
+      } else {
+        router.push(`/dashboard`);
+        toast.success("User login success.", { position: "top-right" });
+      }
       console.log("login submit", values);
     } catch {
       setFormError("Couldn't sign you in. Check your details and try again.");
@@ -50,7 +65,7 @@ export default function LoginPage() {
       footer={
         <>
           Don&apos;t have a workspace yet?{" "}
-          <Link href="/signup" className="font-medium text-indigo hover:text-(--indigo-dark)">
+          <Link href="/signup" className="font-medium text-indigo underline-offset-4 hover:underline">
             Create one
           </Link>
         </>
@@ -82,7 +97,7 @@ export default function LoginPage() {
             <Label htmlFor="password">Password</Label>
             <Link
               href="/forgot-password"
-              className="mb-1.5 text-xs font-medium text-indigo hover:text-(--indigo-dark)"
+              className="mb-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-indigo"
             >
               Forgot password?
             </Link>
@@ -103,7 +118,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-ink"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -112,13 +127,13 @@ export default function LoginPage() {
           <FormError message={errors.password?.message} />
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-muted">
+        <label className="flex items-center gap-2 text-sm text-muted-foreground">
           <input
             type="checkbox"
-            className="h-4 w-4 rounded border-(--line-strong) text-indigo focus-visible:ring-(--indigo-tint)"
+            className="h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-(--indigo-tint)"
             {...register("remember")}
           />
-          Keep me signed in
+          <span>Keep me signed in</span>
         </label>
 
         {formError && (
