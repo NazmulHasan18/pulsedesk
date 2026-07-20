@@ -13,9 +13,9 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 const storageKey = "pulsedesk-theme";
 
-function getInitialTheme(): Theme {
+function getStoredTheme(): Theme | null {
   if (typeof window === "undefined") {
-    return "light";
+    return null;
   }
 
   const storedTheme = window.localStorage.getItem(storageKey);
@@ -24,19 +24,32 @@ function getInitialTheme(): Theme {
     return storedTheme;
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return null;
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme() || "light");
+  const [theme, setTheme] = useState<Theme>("light");
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    const resolvedTheme =
+      getStoredTheme() ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+    setTheme(resolvedTheme);
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || typeof window === "undefined") {
+      return;
+    }
+
     const root = window.document.documentElement;
 
     root.classList.toggle("dark", theme === "dark");
     root.style.colorScheme = theme;
     window.localStorage.setItem(storageKey, theme);
-  }, [theme]);
+  }, [isMounted, theme]);
 
   const value = useMemo(
     () => ({

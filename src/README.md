@@ -6,13 +6,13 @@ surfaces: the company workspace (AGENT / ADMIN) and the platform surface
 
 ## How the roles map to nav
 
-| Login response          | `role` field | Nav shown        |
-|--------------------------|--------------|-------------------|
-| `data.agent.role`        | `AGENT`      | Inbox + My Conversations only |
-| `data.agent.role`        | `ADMIN`      | Full company nav: Overview, Inbox, Agents, Widget, Knowledge Base, Analytics, Billing, Settings |
-| `data.superAdmin`        | n/a          | Platform nav: Overview, Companies, Users, Escalations, Feature Flags, System Health, Billing, Roles, Settings |
+| Login response    | `role` field | Nav shown                                                                                                     |
+| ----------------- | ------------ | ------------------------------------------------------------------------------------------------------------- |
+| `data.agent.role` | `AGENT`      | Inbox + My Conversations only                                                                                 |
+| `data.agent.role` | `ADMIN`      | Full company nav: Overview, Inbox, Agents, Widget, Knowledge Base, Analytics, Billing, Settings               |
+| `data.superAdmin` | n/a          | Platform nav: Overview, Companies, Users, Escalations, Feature Flags, System Health, Billing, Roles, Settings |
 
-The same `/auth/login` response shape is used to build a `DashboardSession`
+The same `/auth/login` response shape is used to build a `NextAuth Session`
 (see `types/auth.ts`) — pass that straight into `<DashboardSidebar session={...} />`
 once you've got real auth wired up. Until then, `app/dashboard/preview/page.tsx`
 mocks all three sessions with a role switcher so you can see and click through

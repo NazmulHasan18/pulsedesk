@@ -72,10 +72,6 @@ export function DashboardSidebar({ session, onLogout, className }: DashboardSide
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [status, setStatus] = React.useState<"online" | "away">("online");
 
-  React.useEffect(() => {
-    window.localStorage.setItem("pd_sidebar_collapsed", collapsed ? "1" : "0");
-  }, [collapsed]);
-
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
@@ -247,7 +243,12 @@ export function DashboardSidebar({ session, onLogout, className }: DashboardSide
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger
             render={
-              <Button size="icon" variant="outline" className="bg-background">
+              <Button
+                size="icon"
+                variant="outline"
+                className="bg-background"
+                aria-label="Open navigation menu"
+              >
                 <Menu className="h-4 w-4" />
               </Button>
             }

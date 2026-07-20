@@ -36,9 +36,7 @@ export default function LoginPage() {
   const onSubmit = async (values: LoginFormValues) => {
     setFormError(null);
     try {
-      // TODO: wire up to the real auth endpoint once it exists.
-      // await fetch("/api/auth/login", { method: "POST", body: JSON.stringify(values) })
-      // await new Promise((resolve) => setTimeout(resolve, 900));
+      // remember might be used in future
       const response = await signIn("credentials", {
         email: values.email,
         password: values.password,

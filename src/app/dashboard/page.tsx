@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 export default function SidebarPreviewPage() {
   const { data: session } = useSession();
-  console.log(session);
+
   return (
     <div className="flex min-h-screen bg-background">
       <DashboardSidebar session={session} onLogout={handleLogout} />
@@ -24,6 +24,7 @@ export default function SidebarPreviewPage() {
         <h1 className="text-2xl font-semibold tracking-tight">
           {session?.user?.userType === "superadmin" ? "Platform overview" : "Dashboard"}
         </h1>
+        {/* render ui based on user type  */}
         <p className="mt-1 text-sm text-muted-foreground">
           This is a placeholder content area — swap it for the real page for each route once the dashboard
           backend is wired up.
