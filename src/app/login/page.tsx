@@ -105,7 +105,7 @@ export default function LoginPage() {
               id="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
-              placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+              placeholder="Enter you password"
               state={errors.password ? "error" : "default"}
               aria-invalid={!!errors.password}
               className="pr-10"

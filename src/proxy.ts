@@ -14,6 +14,7 @@ export default withAuth(
   {
     callbacks: {
       authorized({ token, req }) {
+        console.log("proxy running");
         const isLoggedIn = !!token;
         const { pathname } = req.nextUrl;
         const isDashboardRoute = pathname.startsWith("/dashboard");
