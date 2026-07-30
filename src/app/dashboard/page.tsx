@@ -21,7 +21,7 @@ export default function SidebarPreviewPage() {
           <Button>{session?.user.userType}</Button>
         </div>
 
-        <h1 className="text-2xl font-semibold tracking-tight">
+        <h1 className="font-display text-2xl font-semibold tracking-tight">
           {session?.user?.userType === "superadmin" ? "Platform overview" : "Dashboard"}
         </h1>
         {/* render ui based on user type  */}

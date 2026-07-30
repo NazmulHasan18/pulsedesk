@@ -3,17 +3,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const inputVariants = cva(
-  "flex h-11 w-full rounded-lg border bg-[var(--surface)] px-3.5 text-sm text-[var(--ink)] " +
-    "placeholder:text-[var(--muted-foreground)] transition-colors " +
+  "flex h-11 w-full rounded-lg border border-line bg-surface px-3.5 text-sm text-ink " +
+    "placeholder:text-muted-foreground transition-colors " +
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 " +
-    "focus-visible:ring-offset-[var(--paper)] disabled:cursor-not-allowed disabled:opacity-50",
+    "focus-visible:ring-offset-paper disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       state: {
-        default:
-          "border-[var(--line)] focus-visible:border-[var(--indigo)] focus-visible:ring-[var(--indigo-tint)]",
-        error:
-          "border-[var(--danger)] focus-visible:border-[var(--danger)] focus-visible:ring-[var(--danger-tint)]",
+        default: "focus-visible:border-indigo focus-visible:ring-indigo-tint",
+        error: "border-danger focus-visible:border-danger focus-visible:ring-danger-tint",
       },
     },
     defaultVariants: {

@@ -28,18 +28,18 @@ export function EmbedSection() {
             <br />
             One tag.
           </h2>
-          <p className="mt-4 max-w-md text-white/60">
+          <p className="mt-4 max-w-md text-paper/80">
             Your site-id scopes every conversation, FAQ, and agent to your company alone — so the platform
             stays shared, but your data never is.
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-white/10 bg-[#0c0e12] shadow-2xl">
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-            <span className="font-mono text-xs text-white/40">index.html</span>
+        <div className="overflow-hidden rounded-xl border border-paper/10 bg-code-panel shadow-2xl">
+          <div className="flex items-center justify-between border-b border-paper/10 px-4 py-2.5">
+            <span className="font-mono text-xs text-paper/40">index.html</span>
             <button
               onClick={copy}
-              className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+              className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-paper/60 transition-colors hover:bg-paper/10 hover:text-paper"
             >
               {copied ? (
                 <>
@@ -52,22 +52,22 @@ export function EmbedSection() {
               )}
             </button>
           </div>
-          <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-white/90">
+          <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-paper/90">
             <code>
-              <span className="text-white/40">&lt;script</span>
+              <span className="text-paper/40">&lt;script</span>
               {"\n"}
               {"  "}
-              <span className="text-[#8fd3ff]">src</span>=
-              <span className="text-[#b8f0c2]">&quot;https://cdn.pulsedesk.dev/widget.js&quot;</span>
+              <span className="text-code-syntax-key">src</span>=
+              <span className="text-code-syntax-string">&quot;https://cdn.pulsedesk.dev/widget.js&quot;</span>
               {"\n"}
               {"  "}
-              <span className="text-[#8fd3ff]">data-site-id</span>=
+              <span className="text-code-syntax-key">data-site-id</span>=
               <span className="text-amber">&quot;aurora-skincare-7f2c&quot;</span>
               {"\n"}
               {"  "}
-              <span className="text-[#8fd3ff]">async</span>
+              <span className="text-code-syntax-key">async</span>
               {"\n"}
-              <span className="text-white/40">&gt;&lt;/script&gt;</span>
+              <span className="text-paper/40">&gt;&lt;/script&gt;</span>
             </code>
           </pre>
         </div>

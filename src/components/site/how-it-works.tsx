@@ -63,19 +63,21 @@ export function HowItWorks() {
               key={step.n}
               onMouseEnter={() => setActive(i)}
               onClick={() => setActive(i)}
-              className={cn(
-                "flex min-w-55 items-center gap-4 rounded-xl border px-4 py-4 text-left transition-all lg:min-w-0",
-                active === i
-                  ? "border-ink bg-ink text-paper"
-                  : "border-line bg-surface hover:border-(--line-strong)",
-              )}
+                className={cn(
+                  "flex min-w-55 items-center gap-4 rounded-xl border px-4 py-4 text-left transition-all lg:min-w-0",
+                  active === i
+                    ? "border-ink bg-ink text-paper"
+                    : "border-line bg-surface hover:border-line-strong",
+                )}
             >
-              <span className={cn("font-mono text-xs", active === i ? "text-white/50" : "text-muted-foreground")}>
+              <span
+                className={cn("font-mono text-xs", active === i ? "text-muted" : "text-muted-foreground")}
+              >
                 {step.n}
               </span>
               <div>
                 <div className="font-display text-base font-medium">{step.title}</div>
-                <div className={cn("mt-0.5 text-xs", active === i ? "text-white/70" : "text-muted-foreground")}>
+                <div className={cn("mt-0.5 text-xs", active === i ? "text-muted" : "text-muted-foreground")}>
                   {step.summary}
                 </div>
               </div>
@@ -90,7 +92,7 @@ export function HowItWorks() {
           transition={{ duration: 0.35 }}
           className="flex flex-col justify-center rounded-2xl border border-line bg-surface p-10"
         >
-          <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-(--indigo-tint) text-indigo">
+          <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-tint text-indigo">
             {(() => {
               const Icon = steps[active].icon;
               return <Icon className="h-6 w-6" />;

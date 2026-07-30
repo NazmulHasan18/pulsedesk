@@ -12,6 +12,7 @@
   --line: #e6e3da;
   --line-strong: #cfccc0;
   --danger: #f42323;
+  --danger-tint: #ffe5e5;
 
   --indigo: #4b4fe0;
   --indigo-dark: #3638b8;
@@ -24,6 +25,19 @@
   --amber: #d98a1f;
   --amber-tint: #fbedd8;
   --amber-ink: #9c6413;
+  --brand-panel: #14171c;
+  --brand-panel-2: color-mix(in oklch, var(--brand-panel), white 8%);
+  --code-panel: #0c0e12;
+  --code-syntax-key: #8fd3ff;
+  --code-syntax-string: #b8f0c2;
+  --pattern-dot: rgb(20 23 28 / 6%);
+  --hero-glow: rgb(75 79 224 / 12%);
+  --shadow-panel: 0 24px 80px rgb(15 23 42 / 12%);
+  --shadow-widget: 0 40px 80px -30px rgb(20 23 28 / 35%);
+  --shadow-card-hover: 0 20px 40px -24px rgb(20 23 28 / 25%);
+  --shadow-launcher: 0 8px 24px rgb(75 79 224 / 35%), 0 2px 6px rgb(20 23 28 / 12%);
+  --shadow-launcher-hover: 0 12px 28px rgb(75 79 224 / 40%);
+  --shadow-panel-soft: 0 20px 48px rgb(20 23 28 / 18%);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -41,11 +55,6 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -55,8 +64,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --brand-panel: #14171c;
-  --brand-panel-2: color-mix(in oklch, var(--brand-panel), white 8%);
 }
 
 @theme inline {
@@ -65,10 +72,23 @@
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-danger-tint: var(--danger-tint);
   --color-indigo: var(--indigo);
+  --color-indigo-dark: var(--indigo-dark);
+  --color-indigo-tint: var(--indigo-tint);
   --color-danger: var(--danger);
+  --color-signal-tint: var(--signal-tint);
+  --color-signal-ink: var(--signal-ink);
   --color-signal: var(--signal);
+  --color-amber-tint: var(--amber-tint);
+  --color-amber-ink: var(--amber-ink);
   --color-amber: var(--amber);
+  --color-brand-panel: var(--brand-panel);
+  --color-brand-panel-2: var(--brand-panel-2);
+  --color-code-panel: var(--code-panel);
+  --color-code-syntax-key: var(--code-syntax-key);
+  --color-code-syntax-string: var(--code-syntax-string);
   --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-jetbrains-mono);
@@ -81,11 +101,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -197,17 +212,9 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  background-image: radial-gradient(circle at 1px 1px, rgba(20, 23, 28, 0.06) 1px, transparent 0);
-  background-size: 28px 28px;
-}
-
 ::selection {
   background: var(--indigo);
-  color: white;
+  color: var(--paper);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -228,11 +235,23 @@ body {
   --muted: oklch(0.269 0 0);
   --line: #2a2f3a;
   --line-strong: #3a4150;
+  --danger-tint: #4b1d1d;
   --indigo-tint: #1f2240;
   --signal-tint: #12261d;
   --signal-ink: #79dfad;
   --amber-tint: #2b2010;
   --amber-ink: #f2b55f;
+  --code-panel: #0c0e12;
+  --code-syntax-key: #8fd3ff;
+  --code-syntax-string: #b8f0c2;
+  --pattern-dot: rgb(255 255 255 / 5%);
+  --hero-glow: rgb(75 79 224 / 16%);
+  --shadow-panel: 0 24px 80px rgb(0 0 0 / 32%);
+  --shadow-widget: 0 40px 80px -30px rgb(0 0 0 / 45%);
+  --shadow-card-hover: 0 20px 40px -24px rgb(0 0 0 / 38%);
+  --shadow-launcher: 0 8px 24px rgb(75 79 224 / 45%), 0 2px 6px rgb(0 0 0 / 22%);
+  --shadow-launcher-hover: 0 12px 28px rgb(75 79 224 / 52%);
+  --shadow-panel-soft: 0 20px 48px rgb(0 0 0 / 32%);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -243,7 +262,6 @@ body {
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
@@ -251,11 +269,6 @@ body {
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -272,14 +285,13 @@ body {
   }
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(circle at 1px 1px, rgba(20, 23, 28, 0.06) 1px, transparent 0);
+    background-color: var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, var(--pattern-dot) 1px, transparent 0);
     background-size: 28px 28px;
+    color: var(--ink);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }
   html {
     @apply font-sans;
   }
-}
-
-.dark body {
-  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
 }

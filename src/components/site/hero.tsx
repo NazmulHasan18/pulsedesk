@@ -14,7 +14,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-(--line-strong) bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-foreground">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-signal" />
@@ -35,7 +35,7 @@ export function Hero() {
               >
                 <path
                   d="M2 9.5C60 3 240 3 298 9.5"
-                  stroke="var(--amber)"
+                  className="stroke-amber"
                   strokeWidth="4"
                   strokeLinecap="round"
                 />

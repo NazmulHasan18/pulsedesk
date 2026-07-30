@@ -41,9 +41,9 @@ const features = [
 ];
 
 const tintMap: Record<string, string> = {
-  signal: "bg-[var(--signal-tint)] text-[var(--signal-ink)]",
-  amber: "bg-[var(--amber-tint)] text-[var(--amber-ink)]",
-  indigo: "bg-[var(--indigo-tint)] text-[var(--indigo)]",
+  signal: "bg-signal-tint text-signal-ink",
+  amber: "bg-amber-tint text-amber-ink",
+  indigo: "bg-indigo-tint text-indigo",
 };
 
 export function Features() {
@@ -63,7 +63,7 @@ export function Features() {
         {features.map((f) => (
           <Card
             key={f.title}
-            className="group p-7 transition-all hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(20,23,28,0.25)]"
+            className="group p-7 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
           >
             <div className={`mb-5 flex h-11 w-11 items-center justify-center rounded-xl ${tintMap[f.tint]}`}>
               <f.icon className="h-5 w-5" />

@@ -87,13 +87,13 @@ function Avatar({ from }: { from: Sender }) {
   }
   if (from === "ai") {
     return (
-      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-(--amber-tint) text-(--amber-ink)">
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-tint text-amber-ink">
         <Sparkles className="h-3.5 w-3.5" />
       </div>
     );
   }
   return (
-    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-(--signal-tint) text-(--signal-ink) text-[11px] font-semibold">
+    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-signal-tint text-[11px] font-semibold text-signal-ink">
       M
     </div>
   );
@@ -114,7 +114,7 @@ function Bubble({ beat, isLatest }: { beat: Extract<Beat, { kind: "message" }>; 
       <Avatar from={beat.from} />
       <div className={cn("max-w-[78%]", isVisitor && "flex flex-col items-end")}>
         {beat.meta && (
-          <div className="mb-1 flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide text-(--amber-ink)">
+          <div className="mb-1 flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide text-amber-ink">
             <Sparkles className="h-2.5 w-2.5" /> {beat.meta}
           </div>
         )}
@@ -131,7 +131,7 @@ function Bubble({ beat, isLatest }: { beat: Extract<Beat, { kind: "message" }>; 
         </div>
         {isVisitor && (
           <span className="mt-1 flex items-center gap-0.5 text-[10px] text-white/0">
-            <CheckCheck className="h-3 w-3 text-(--indigo)/0" />
+            <CheckCheck className="h-3 w-3 text-indigo/0" />
           </span>
         )}
       </div>
@@ -183,12 +183,12 @@ export function ChatWidgetDemo() {
   return (
     <div className="relative">
       {/* mock browser chrome */}
-      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_40px_80px_-30px_rgba(20,23,28,0.35)]">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-widget)]">
         <div className="flex items-center gap-1.5 border-b border-line bg-paper px-4 py-2.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e6a355]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e4b94f]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#7fb87a]" />
-          <div className="ml-3 flex-1 truncate rounded-md bg-surface px-3 py-1 text-[11px] text-muted-foreground border border-line">
+          <span className="h-2.5 w-2.5 rounded-full bg-amber" />
+          <span className="h-2.5 w-2.5 rounded-full bg-amber-ink" />
+          <span className="h-2.5 w-2.5 rounded-full bg-signal" />
+          <div className="ml-3 flex-1 truncate rounded-md border border-line bg-surface px-3 py-1 text-[11px] text-muted-foreground">
             khativai.com
           </div>
         </div>
@@ -220,7 +220,7 @@ export function ChatWidgetDemo() {
                     </span>
                     <span className="text-[13px] font-medium">Aurora Support</span>
                   </div>
-                  <span className="text-[10px] text-white/50">via PulseDesk</span>
+                  <span className="text-[10px] text-paper/50">via PulseDesk</span>
                 </div>
 
                 <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-3 py-3 scrollbar-none">
@@ -268,7 +268,7 @@ export function ChatWidgetDemo() {
                   <div className="flex-1 truncate rounded-full bg-foreground/5 px-3 py-2 text-[12px] text-muted-foreground">
                     Write a message…
                   </div>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo text-paper">
                     <Check className="h-3.5 w-3.5" />
                   </div>
                 </div>
@@ -279,7 +279,7 @@ export function ChatWidgetDemo() {
           {!open && (
             <button
               onClick={() => setOpen(true)}
-              className="absolute bottom-4 right-4 flex h-14 w-14 items-center justify-center rounded-full bg-indigo text-white shadow-lg"
+              className="absolute bottom-4 right-4 flex h-14 w-14 items-center justify-center rounded-full bg-indigo text-paper shadow-lg"
             >
               <Sparkles className="h-5 w-5" />
             </button>
@@ -298,7 +298,7 @@ export function ChatWidgetDemo() {
               "rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
               scriptIndex === i
                 ? "border-ink bg-ink text-paper"
-                : "border-(--line-strong) text-ink hover:border-ink",
+                : "border-line-strong text-ink hover:border-ink",
             )}
           >
             {s.prompt}

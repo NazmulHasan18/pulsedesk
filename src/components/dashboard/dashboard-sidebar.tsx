@@ -31,9 +31,9 @@ interface DashboardSidebarProps {
 }
 
 const ROLE_STYLES: Record<string, string> = {
-  AGENT: "bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20",
+  AGENT: "bg-foreground/5 text-foreground/70 border-foreground/10",
   ADMIN: "bg-primary/10 text-primary border-primary/20",
-  SUPERADMIN: "bg-violet-500/10 text-violet-600 dark:text-violet-300 border-violet-500/20",
+  SUPERADMIN: "bg-indigo/10 text-indigo border-indigo/20",
 };
 
 function getInitials(name: string) {

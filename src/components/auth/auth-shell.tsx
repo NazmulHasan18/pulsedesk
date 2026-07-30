@@ -18,17 +18,15 @@ import { cn } from "@/lib/utils";
 const beats = [
   {
     key: "human",
-    dotVar: "var(--signal)",
-    tintVar: "var(--signal-tint)",
-    inkVar: "var(--signal-ink)",
+    dotClass: "bg-signal",
+    labelClass: "text-signal",
     label: "Amara · human agent",
     line: "\u201cHappy to take a look at your invoice \u2014 one sec.\u201d",
   },
   {
     key: "ai",
-    dotVar: "var(--amber)",
-    tintVar: "var(--amber-tint)",
-    inkVar: "var(--amber-ink)",
+    dotClass: "bg-amber",
+    labelClass: "text-amber",
     label: "PulseDesk AI · answered instantly",
     line: "\u201cYour invoice is available under Billing \u2192 History.\u201d",
   },
@@ -49,7 +47,7 @@ function ResolutionThread() {
   const beat = beats[prefersReducedMotion ? 0 : active];
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/4 p-4 backdrop-blur-sm">
+    <div className="rounded-xl border border-paper/10 bg-paper/5 p-4 backdrop-blur-sm">
       <AnimatePresence mode="wait">
         <motion.div
           key={beat.key}
@@ -59,16 +57,12 @@ function ResolutionThread() {
           transition={{ duration: 0.35, ease: "easeOut" }}
           className="flex items-start gap-3"
         >
-          <span
-            className="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full"
-            style={{ backgroundColor: beat.dotVar }}
-            aria-hidden
-          />
+          <span className={cn("mt-1 inline-flex h-2 w-2 shrink-0 rounded-full", beat.dotClass)} aria-hidden />
           <div className="min-w-0">
-            <p className="text-xs font-medium tracking-wide" style={{ color: beat.dotVar }}>
+            <p className={cn("text-xs font-medium tracking-wide", beat.labelClass)}>
               {beat.label}
             </p>
-            <p className="mt-1 text-sm leading-relaxed text-white/80">{beat.line}</p>
+            <p className="mt-1 text-sm leading-relaxed text-paper/80">{beat.line}</p>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -90,14 +84,14 @@ export function AuthShell({
   footer: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(75,79,224,0.12),transparent_35%),linear-gradient(180deg,var(--paper),var(--paper))] text-foreground">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,var(--hero-glow),transparent_35%),linear-gradient(180deg,var(--paper),var(--paper))] text-foreground">
       <div className="grid min-h-screen lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         {/* Brand / signature panel */}
-        <div className="relative hidden flex-col justify-between overflow-hidden bg-[linear-gradient(180deg,var(--brand-panel),var(--brand-panel-2))] px-10 py-10 text-white lg:flex">
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-linear-to-b from-brand-panel to-brand-panel-2 px-10 py-10 text-paper lg:flex">
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.07]"
             style={{
-              backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+              backgroundImage: "radial-gradient(circle at 1px 1px, var(--paper) 1px, transparent 0)",
               backgroundSize: "24px 24px",
             }}
             aria-hidden
@@ -105,40 +99,40 @@ export function AuthShell({
 
           <Link
             href="/"
-            className="relative z-10 flex items-center gap-2 font-display text-lg font-medium text-white"
+            className="relative z-10 flex items-center gap-2 font-display text-lg font-medium text-paper"
           >
-            <MessageCircle className="h-5 w-5" style={{ color: "var(--amber)" }} />
+            <MessageCircle className="h-5 w-5 text-amber" />
             PulseDesk
           </Link>
 
           <div className="relative z-10 max-w-sm">
-            <p className="text-sm font-medium uppercase tracking-wider text-white/50">{eyebrow}</p>
-            <h1 className="mt-3 font-display text-3xl font-medium leading-tight text-white">{title}</h1>
-            <p className="mt-3 text-sm leading-relaxed text-white/60">{subtitle}</p>
+            <p className="text-sm font-medium uppercase tracking-wider text-paper/50">{eyebrow}</p>
+            <h1 className="mt-3 font-display text-3xl font-medium leading-tight text-paper">{title}</h1>
+            <p className="mt-3 text-sm leading-relaxed text-paper/60">{subtitle}</p>
 
             <div className="mt-8">
               <ResolutionThread />
             </div>
           </div>
 
-          <p className="relative z-10 text-xs text-white/35">
+          <p className="relative z-10 text-xs text-paper/35">
             One conversation. A human agent or an instant AI answer - your customer never has to know which.
           </p>
         </div>
 
         {/* Form panel */}
         <div className="flex items-center justify-center px-6 py-10 sm:px-10 lg:px-8 lg:py-8">
-          <div className="relative w-full max-w-124 overflow-hidden rounded-[2rem] border border-line/70 bg-surface/95 px-6 py-8 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur-sm sm:px-8 sm:py-10">
+          <div className="relative w-full max-w-124 overflow-hidden rounded-[2rem] border border-line/70 bg-surface/95 px-6 py-8 shadow-[var(--shadow-panel)] backdrop-blur-sm sm:px-8 sm:py-10">
             <div
               aria-hidden
-              className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--indigo),transparent)] opacity-60"
+              className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-indigo to-transparent opacity-60"
             />
 
             <Link
               href="/"
-              className="mb-8 inline-flex items-center gap-2 font-display text-lg font-medium text-foreground lg:hidden"
+              className="mb-8 inline-flex items-center gap-2 font-display text-lg font-medium tracking-tight text-foreground lg:hidden"
             >
-              <MessageCircle className="h-5 w-5" style={{ color: "var(--amber)" }} />
+              <MessageCircle className="h-5 w-5 text-amber" />
               PulseDesk
             </Link>
 

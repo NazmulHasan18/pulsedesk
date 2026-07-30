@@ -39,7 +39,7 @@ export function FaqSection() {
         {faqs.map((f) => (
           <AccordionItem key={f.q} value={f.q}>
             <AccordionTrigger>{f.q}</AccordionTrigger>
-            <AccordionContent>{f.a}</AccordionContent>
+            <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

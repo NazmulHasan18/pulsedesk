@@ -169,7 +169,7 @@ export default function SignupPage() {
           <label className="flex items-start gap-2 text-sm text-muted-foreground">
             <input
               type="checkbox"
-              className="mt-0.5 h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-(--indigo-tint)"
+              className="mt-0.5 h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-indigo-tint"
               {...register("terms", {
                 required: "You need to accept the terms to continue.",
               })}

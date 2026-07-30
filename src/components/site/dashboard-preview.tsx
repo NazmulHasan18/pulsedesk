@@ -1,7 +1,11 @@
 "use client";
 
+import * as React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import { Palette, BookOpen, Inbox } from "lucide-react";
+
+const accentSwatches = ["bg-indigo", "bg-signal", "bg-amber", "bg-ink"] as const;
 
 export function DashboardPreview() {
   return (
@@ -21,7 +25,7 @@ export function DashboardPreview() {
         <div className="w-full overflow-x-auto">
           <TabsList className="w-max min-w-fit whitespace-nowrap">
             <TabsTrigger value="widget">
-              <Palette className="h-2.5 w-2.5" /> Widget
+              <Palette className="h-3.5 w-3.5" /> Widget
             </TabsTrigger>
             <TabsTrigger value="faq">
               <BookOpen className="h-3.5 w-3.5" /> Knowledge base
@@ -43,11 +47,10 @@ export function DashboardPreview() {
               <div className="mt-6 space-y-4">
                 <Field label="Accent color">
                   <div className="flex gap-2">
-                    {["#4B4FE0", "#1F9D68", "#D98A1F", "#14171C"].map((c) => (
+                    {accentSwatches.map((swatch) => (
                       <span
-                        key={c}
-                        className="h-7 w-7 rounded-full border-2 border-background shadow ring-1 ring-line"
-                        style={{ background: c }}
+                        key={swatch}
+                        className={cn("h-7 w-7 rounded-full border-2 border-background shadow ring-1 ring-line", swatch)}
                       />
                     ))}
                   </div>
@@ -60,7 +63,7 @@ export function DashboardPreview() {
                 <Field label="Position">
                   <div className="flex gap-2 text-xs">
                     <span className="rounded-full bg-ink px-3 py-1.5 text-paper">Bottom right</span>
-                    <span className="rounded-full border border-(--line-strong) px-3 py-1.5">
+                    <span className="rounded-full border border-line-strong px-3 py-1.5">
                       Bottom left
                     </span>
                   </div>
@@ -95,7 +98,7 @@ export function DashboardPreview() {
                 <div key={row.q} className="flex items-center justify-between gap-4 px-5 py-3.5 text-sm">
                   <span className="font-medium">{row.q}</span>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <span className="rounded-full bg-(--indigo-tint) px-2.5 py-1 text-indigo">{row.tag}</span>
+                    <span className="rounded-full bg-indigo-tint px-2.5 py-1 text-indigo">{row.tag}</span>
                     <span>{row.matches} matches this month</span>
                   </div>
                 </div>
@@ -121,7 +124,7 @@ export function DashboardPreview() {
                   <div className="text-sm font-medium">{row.name}</div>
                   <div className="mt-1 text-xs text-muted-foreground">{row.wait}</div>
                   {row.draft && (
-                    <div className="mt-3 rounded-lg bg-(--amber-tint) px-2.5 py-1.5 text-[11px] text-(--amber-ink)">
+                    <div className="mt-3 rounded-lg bg-amber-tint px-2.5 py-1.5 text-[11px] text-amber-ink">
                       AI draft ready
                     </div>
                   )}

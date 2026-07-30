@@ -10,7 +10,7 @@ export function CtaSection() {
         <div
           className="pointer-events-none absolute inset-0 opacity-20"
           style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+            backgroundImage: "radial-gradient(circle at 1px 1px, var(--paper) 1px, transparent 0)",
             backgroundSize: "24px 24px",
           }}
         />
@@ -19,15 +19,15 @@ export function CtaSection() {
             Your next visitor is about to
             <br className="hidden sm:block" /> ask a question you&apos;ve answered before.
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-white/70">
+          <p className="mx-auto mt-4 max-w-md text-paper/70">
             Let PulseDesk answer it for you — and hand off cleanly the moment it can&apos;t.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Button variant="default" size="lg" className="bg-white text-indigo hover:bg-white/90">
+            <Button variant="default" size="lg" className="bg-paper text-indigo hover:bg-paper/90">
               Get your site-id
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="lg" className="border-white/30 text-white hover:border-white">
+            <Button variant="outline" size="lg" className="border-paper/30 text-ink hover:border-paper">
               See a live demo
             </Button>
           </div>

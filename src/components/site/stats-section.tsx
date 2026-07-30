@@ -30,7 +30,7 @@ export function StatsSection() {
 
           <div className="mt-8 flex gap-8">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-(--amber-tint) text-(--amber-ink)">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-tint text-amber-ink">
                 <Sparkles className="h-4 w-4" />
               </span>
               <div>
@@ -39,7 +39,7 @@ export function StatsSection() {
               </div>
             </div>
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-(--signal-tint) text-(--signal-ink)">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-signal-tint text-signal-ink">
                 <User className="h-4 w-4" />
               </span>
               <div>
@@ -53,13 +53,12 @@ export function StatsSection() {
         <div ref={ref} className="flex justify-center">
           <div className="relative h-56 w-56">
             <svg viewBox="0 0 160 160" className="h-full w-full -rotate-90">
-              <circle cx="80" cy="80" r="70" fill="none" stroke="var(--signal-tint)" strokeWidth="16" />
+              <circle cx="80" cy="80" r="70" className="fill-none stroke-signal-tint" strokeWidth="16" />
               <motion.circle
                 cx="80"
                 cy="80"
                 r="70"
-                fill="none"
-                stroke="var(--amber)"
+                className="fill-none stroke-amber"
                 strokeWidth="16"
                 strokeLinecap="round"
                 strokeDasharray={circumference}

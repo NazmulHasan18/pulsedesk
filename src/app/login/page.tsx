@@ -93,10 +93,7 @@ export default function LoginPage() {
         <div>
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <Link
-              href="/forgot-password"
-              className="mb-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-indigo"
-            >
+            <Link href="/forgot-password" className="mb-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-indigo">
               Forgot password?
             </Link>
           </div>
@@ -128,7 +125,7 @@ export default function LoginPage() {
         <label className="flex items-center gap-2 text-sm text-muted-foreground">
           <input
             type="checkbox"
-            className="h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-(--indigo-tint)"
+            className="h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-indigo-tint"
             {...register("remember")}
           />
           <span>Keep me signed in</span>
