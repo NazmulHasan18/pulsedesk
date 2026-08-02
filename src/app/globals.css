@@ -253,7 +253,7 @@ html {
   --shadow-launcher-hover: 0 12px 28px rgb(75 79 224 / 52%);
   --shadow-panel-soft: 0 20px 48px rgb(0 0 0 / 32%);
   --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --foreground: #fafafa;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);

@@ -59,10 +59,8 @@ function ResolutionThread() {
         >
           <span className={cn("mt-1 inline-flex h-2 w-2 shrink-0 rounded-full", beat.dotClass)} aria-hidden />
           <div className="min-w-0">
-            <p className={cn("text-xs font-medium tracking-wide", beat.labelClass)}>
-              {beat.label}
-            </p>
-            <p className="mt-1 text-sm leading-relaxed text-paper/80">{beat.line}</p>
+            <p className={cn("text-xs font-medium tracking-wide", beat.labelClass)}>{beat.label}</p>
+            <p className="mt-1 text-sm leading-relaxed text-white/80">{beat.line}</p>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -87,7 +85,7 @@ export function AuthShell({
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,var(--hero-glow),transparent_35%),linear-gradient(180deg,var(--paper),var(--paper))] text-foreground">
       <div className="grid min-h-screen lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         {/* Brand / signature panel */}
-        <div className="relative hidden flex-col justify-between overflow-hidden bg-linear-to-b from-brand-panel to-brand-panel-2 px-10 py-10 text-paper lg:flex">
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-linear-to-b from-brand-panel to-brand-panel-2 px-10 py-10 text-white lg:flex">
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.07]"
             style={{
@@ -99,30 +97,30 @@ export function AuthShell({
 
           <Link
             href="/"
-            className="relative z-10 flex items-center gap-2 font-display text-lg font-medium text-paper"
+            className="relative z-10 flex items-center gap-2 font-display text-lg font-medium text-white"
           >
             <MessageCircle className="h-5 w-5 text-amber" />
             PulseDesk
           </Link>
 
           <div className="relative z-10 max-w-sm">
-            <p className="text-sm font-medium uppercase tracking-wider text-paper/50">{eyebrow}</p>
-            <h1 className="mt-3 font-display text-3xl font-medium leading-tight text-paper">{title}</h1>
-            <p className="mt-3 text-sm leading-relaxed text-paper/60">{subtitle}</p>
+            <p className="text-sm font-medium uppercase tracking-wider text-white/50">{eyebrow}</p>
+            <h1 className="mt-3 font-display text-3xl font-medium leading-tight text-white">{title}</h1>
+            <p className="mt-3 text-sm leading-relaxed text-white/60">{subtitle}</p>
 
             <div className="mt-8">
               <ResolutionThread />
             </div>
           </div>
 
-          <p className="relative z-10 text-xs text-paper/35">
+          <p className="relative z-10 text-xs text-white/35">
             One conversation. A human agent or an instant AI answer - your customer never has to know which.
           </p>
         </div>
 
         {/* Form panel */}
         <div className="flex items-center justify-center px-6 py-10 sm:px-10 lg:px-8 lg:py-8">
-          <div className="relative w-full max-w-124 overflow-hidden rounded-[2rem] border border-line/70 bg-surface/95 px-6 py-8 shadow-[var(--shadow-panel)] backdrop-blur-sm sm:px-8 sm:py-10">
+          <div className="relative w-full max-w-124 overflow-hidden rounded-[2rem] border border-line/70 bg-surface/95 px-6 py-8 shadow-(--shadow-panel) backdrop-blur-sm sm:px-8 sm:py-10">
             <div
               aria-hidden
               className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-indigo to-transparent opacity-60"

@@ -17,20 +17,50 @@ import { useRouter } from "next/navigation";
 type LoginFormValues = {
   email: string;
   password: string;
-  remember: boolean;
+  superadmin: boolean;
 };
+
+type DemoAccountOption = {
+  label: string;
+  email: string;
+  password: string;
+  superadmin: boolean;
+};
+
+const demoAccounts: DemoAccountOption[] = [
+  {
+    label: "Superadmin",
+    email: "superadmin@pulsedesk.dev",
+    password: "ChangeMe123!",
+    superadmin: true,
+  },
+  {
+    label: "Company Admin",
+    email: "nazmul@gmail.com",
+    password: "12345678",
+    superadmin: false,
+  },
+  {
+    label: "Company Agent",
+    email: "agent1@khativai.com",
+    password: "12345678",
+    superadmin: false,
+  },
+];
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [formError, setFormError] = React.useState<string | null>(null);
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     mode: "onBlur",
-    defaultValues: { email: "", password: "", remember: false },
+    defaultValues: { email: "", password: "", superadmin: false },
   });
 
   const onSubmit = async (values: LoginFormValues) => {
@@ -40,11 +70,12 @@ export default function LoginPage() {
       const response = await signIn("credentials", {
         email: values.email,
         password: values.password,
+        type: values.superadmin ? "admin" : "user",
         redirect: false,
       });
       console.log(response);
       if (response?.error) {
-        toast.error(response?.error || "Invalid email or password.");
+        toast.error("Invalid email or password.");
       } else {
         router.push(`/dashboard`);
         toast.success("User login success.", { position: "top-right" });
@@ -53,6 +84,18 @@ export default function LoginPage() {
     } catch {
       setFormError("Couldn't sign you in. Check your details and try again.");
     }
+  };
+
+  const handleQuickLogin = async (account: DemoAccountOption) => {
+    setValue("email", account.email);
+    setValue("password", account.password);
+    setValue("superadmin", account.superadmin);
+
+    await onSubmit({
+      email: account.email,
+      password: account.password,
+      superadmin: account.superadmin,
+    });
   };
 
   return (
@@ -69,6 +112,24 @@ export default function LoginPage() {
         </>
       }
     >
+      <div className="mb-5 space-y-2">
+        <p className="text-sm font-medium text-foreground">Quick demo login</p>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {demoAccounts.map((account) => (
+            <Button
+              key={account.label}
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => void handleQuickLogin(account)}
+              className="w-full justify-center"
+            >
+              {account.label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
         <div>
           <Label htmlFor="email">Work email</Label>
@@ -93,7 +154,10 @@ export default function LoginPage() {
         <div>
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <Link href="/forgot-password" className="mb-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-indigo">
+            <Link
+              href="/forgot-password"
+              className="mb-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-indigo"
+            >
               Forgot password?
             </Link>
           </div>
@@ -126,9 +190,9 @@ export default function LoginPage() {
           <input
             type="checkbox"
             className="h-4 w-4 rounded border-line-strong text-indigo focus-visible:ring-indigo-tint"
-            {...register("remember")}
+            {...register("superadmin")}
           />
-          <span>Keep me signed in</span>
+          <span>Login as superadmin</span>
         </label>
 
         {formError && (

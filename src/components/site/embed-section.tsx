@@ -35,11 +35,11 @@ export function EmbedSection() {
         </div>
 
         <div className="overflow-hidden rounded-xl border border-paper/10 bg-code-panel shadow-2xl">
-          <div className="flex items-center justify-between border-b border-paper/10 px-4 py-2.5">
-            <span className="font-mono text-xs text-paper/40">index.html</span>
+          <div className="flex items-center justify-between border-b border-ink/10 bg-paper px-4 py-2.5">
+            <span className="font-mono text-xs text-ink">index.html</span>
             <button
               onClick={copy}
-              className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-paper/60 transition-colors hover:bg-paper/10 hover:text-paper"
+              className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-ink/70 transition-colors hover:bg-paper/10 hover:text-ink"
             >
               {copied ? (
                 <>
@@ -54,7 +54,7 @@ export function EmbedSection() {
           </div>
           <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-paper/90">
             <code>
-              <span className="text-paper/40">&lt;script</span>
+              <span className="text-signal-ink">&lt;script</span>
               {"\n"}
               {"  "}
               <span className="text-code-syntax-key">src</span>=
@@ -67,7 +67,7 @@ export function EmbedSection() {
               {"  "}
               <span className="text-code-syntax-key">async</span>
               {"\n"}
-              <span className="text-paper/40">&gt;&lt;/script&gt;</span>
+              <span className="text-signal-ink">&gt;&lt;/script&gt;</span>
             </code>
           </pre>
         </div>
