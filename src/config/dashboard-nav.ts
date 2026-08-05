@@ -82,28 +82,28 @@ export const superAdminNav: NavSection[] = [
   {
     label: "Platform",
     items: [
-      { title: "Overview", href: "/superadmin", icon: LayoutDashboard },
-      { title: "Companies", href: "/superadmin/companies", icon: Building2 },
-      { title: "Agents & Users", href: "/superadmin/users", icon: Users },
+      { title: "Overview", href: "/dashboard", icon: LayoutDashboard },
+      { title: "Companies", href: "/dashboard/companies", icon: Building2 },
+      { title: "Agents & Users", href: "/dashboard/users", icon: Users },
     ],
   },
   {
     label: "Operations",
     items: [
-      { title: "Escalations", href: "/superadmin/escalations", icon: LifeBuoy },
-      { title: "Feature Flags", href: "/superadmin/flags", icon: Flag },
-      { title: "System Health", href: "/superadmin/system", icon: ServerCog },
+      { title: "Escalations", href: "/dashboard/escalations", icon: LifeBuoy },
+      { title: "Feature Flags", href: "/dashboard/flags", icon: Flag },
+      { title: "System Health", href: "/dashboard/system", icon: ServerCog },
     ],
   },
   {
     label: "Business",
-    items: [{ title: "Billing & Plans", href: "/superadmin/billing", icon: CreditCard }],
+    items: [{ title: "Billing & Plans", href: "/dashboard/billing", icon: CreditCard }],
   },
   {
     label: "Access",
     items: [
-      { title: "Admin Roles", href: "/superadmin/roles", icon: ShieldCheck },
-      { title: "Settings", href: "/superadmin/settings", icon: Settings },
+      { title: "Admin Roles", href: "/dashboard/roles", icon: ShieldCheck },
+      { title: "Settings", href: "/dashboard/settings", icon: Settings },
     ],
   },
 ];

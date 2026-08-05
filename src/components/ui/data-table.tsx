@@ -69,6 +69,7 @@ export interface DataTableProps<T> {
   data: T[];
   getRowId: (row: T) => string;
   isLoading?: boolean;
+  isFetching?: boolean;
   skeletonRows?: number;
   emptyState?: DataTableEmptyState;
   /** Renders a per-row action menu/button, pinned to the top-right on mobile cards. */
@@ -95,6 +96,7 @@ export function DataTable<T>({
   skeletonRows = 5,
   emptyState,
   rowActions,
+  isFetching,
   onRowClick,
   pagination,
   className,
@@ -118,7 +120,7 @@ export function DataTable<T>({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading &&
+            {(isLoading || isFetching) &&
               Array.from({ length: skeletonRows }).map((_, i) => (
                 <TableRow key={i} className="hover:bg-transparent">
                   <TableCell colSpan={colSpan}>

@@ -23,9 +23,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { getNavSections } from "@/config/dashboard-nav";
 import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import { handleLogout } from "@/helpers/handelLogout";
 
 interface DashboardSidebarProps {
-  session: Session | null;
   onLogout?: () => void;
   className?: string;
 }
@@ -65,7 +66,8 @@ function getIdentity(session: Session | null) {
   };
 }
 
-export function DashboardSidebar({ session, onLogout, className }: DashboardSidebarProps) {
+export function DashboardSidebar({ className }: DashboardSidebarProps) {
+  const { data: session } = useSession();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = React.useState(false);
 
@@ -117,7 +119,10 @@ export function DashboardSidebar({ session, onLogout, className }: DashboardSide
             )}
             <div className="flex flex-col gap-0.5">
               {section.items.map((item) => {
-                const active = pathname === item.href || pathname?.startsWith(item.href + "/");
+                const active =
+                  item.href === "/dashboard"
+                    ? pathname === "/dashboard"
+                    : pathname === item.href || pathname.startsWith(item.href + "/");
 
                 const link = (
                   <Link
@@ -212,7 +217,7 @@ export function DashboardSidebar({ session, onLogout, className }: DashboardSide
               </Badge>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onLogout} className="text-destructive focus:text-destructive">
+            <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
               <LogOut className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>

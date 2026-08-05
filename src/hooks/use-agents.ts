@@ -26,6 +26,17 @@ export function useAgents(params: AgentListParams) {
     enabled: !!token,
   });
 }
+export function useAgentDetails({ agentId }: { agentId: string }) {
+  const { data: session } = useSession();
+  const token = session?.accessToken;
+
+  return useQuery({
+    queryKey: [...AGENTS_KEY, agentId],
+    queryFn: () => AgentService.getById(agentId, token),
+    placeholderData: (prev) => prev,
+    enabled: !!token,
+  });
+}
 
 export function useInviteAgent() {
   const { data: session } = useSession();

@@ -34,6 +34,7 @@ import { InviteAgentDialog } from "./invite-agent-dialog";
 import { DataTable, type DataTableColumn } from "@/components/ui/data-table";
 import { useAgents, useDeleteAgent, useResetAgentPassword, useSetAgentStatus } from "@/hooks/use-agents";
 import type { Agent, AgentRole, AgentStatus } from "@/types/agent";
+import Link from "next/link";
 
 const STATUS_OPTIONS: { value: AgentStatus | "ALL"; label: string }[] = [
   { value: "ALL", label: "All statuses" },
@@ -116,10 +117,12 @@ export function AgentsTable() {
               {initials(agent.name)}
             </AvatarFallback>
           </Avatar>
-          <div className="min-w-0">
-            <p className="truncate font-medium text-ink">{agent.name}</p>
-            <p className="truncate text-xs text-muted-foreground">{agent.email}</p>
-          </div>
+          <Link href={`/dashboard/agents/${agent.publicId}`}>
+            <div className="group min-w-0">
+              <p className="truncate font-medium text-ink group-hover:underline">{agent.name}</p>
+              <p className="truncate text-xs text-muted-foreground">{agent.email}</p>
+            </div>
+          </Link>
         </div>
       ),
     },
