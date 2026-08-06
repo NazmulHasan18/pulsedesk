@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,62 +15,64 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCreateCompany } from "@/hooks/useCompanies";
-import type { CompanyPlan } from "@/types/company";
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import { CreateCompanyPayload } from "@/types/company";
 
-const PLAN_OPTIONS: { value: CompanyPlan; label: string }[] = [
+const PLAN_OPTIONS = [
   { value: "FREE", label: "Free" },
   { value: "STARTER", label: "Starter" },
   { value: "GROWTH", label: "Growth" },
   { value: "ENTERPRISE", label: "Enterprise" },
-];
+] as const;
 
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+// Password intentionally omitted — not required for this form
 
 export function CreateCompanyDialog() {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [slugTouched, setSlugTouched] = useState(false);
-  const [ownerEmail, setOwnerEmail] = useState("");
-  const [plan, setPlan] = useState<CompanyPlan>("FREE");
-
   const { mutate: createCompany, isPending } = useCreateCompany();
 
-  const resetForm = () => {
-    setName("");
-    setSlug("");
-    setSlugTouched(false);
-    setOwnerEmail("");
-    setPlan("FREE");
-  };
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<CreateCompanyPayload>({
+    mode: "onChange",
+    defaultValues: {
+      companyName: "",
+      adminName: "",
+      email: "",
+      plan: "FREE",
+    },
+  });
 
-  const handleNameChange = (value: string) => {
-    setName(value);
-    if (!slugTouched) setSlug(slugify(value));
-  };
-
-  const handleSubmit = () => {
+  const onSubmit = (values: CreateCompanyPayload) => {
     createCompany(
-      { name, slug, ownerEmail, plan },
+      {
+        companyName: values.companyName,
+        adminName: values.adminName,
+        email: values.email,
+        plan: values.plan,
+      },
       {
         onSuccess: () => {
           setOpen(false);
-          resetForm();
+          reset();
         },
       },
     );
   };
 
-  const isValid = name.trim().length > 1 && slug.trim().length > 1 && ownerEmail.includes("@");
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        if (!next) reset();
+      }}
+    >
       <DialogTrigger
         render={(props) => (
           <Button {...props} className="gap-2">
@@ -87,29 +89,31 @@ export function CreateCompanyDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 py-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-2">
           <div className="grid gap-2">
             <Label htmlFor="company-name">Company name</Label>
             <Input
               id="company-name"
-              value={name}
-              onChange={(e) => handleNameChange(e.target.value)}
               placeholder="Acme Inc."
+              {...register("companyName", {
+                required: "Company name is required",
+                minLength: { value: 2, message: "Too short" },
+              })}
             />
+            {errors.companyName && <p className="text-xs text-destructive">{errors.companyName.message}</p>}
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="company-slug">Slug</Label>
+            <Label htmlFor="admin-name">Admin name</Label>
             <Input
-              id="company-slug"
-              value={slug}
-              onChange={(e) => {
-                setSlugTouched(true);
-                setSlug(slugify(e.target.value));
-              }}
-              placeholder="acme-inc"
+              id="admin-name"
+              placeholder="Jane Doe"
+              {...register("adminName", {
+                required: "Admin name is required",
+                minLength: { value: 2, message: "Too short" },
+              })}
             />
-            <p className="text-xs text-muted-foreground">Used in the widget key and portal URL.</p>
+            {errors.adminName && <p className="text-xs text-destructive">{errors.adminName.message}</p>}
           </div>
 
           <div className="grid gap-2">
@@ -117,37 +121,46 @@ export function CreateCompanyDialog() {
             <Input
               id="owner-email"
               type="email"
-              value={ownerEmail}
-              onChange={(e) => setOwnerEmail(e.target.value)}
               placeholder="owner@acme.com"
+              {...register("email", {
+                required: "Email is required",
+                pattern: { value: /^\S+@\S+\.\S+$/, message: "Invalid email" },
+              })}
             />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
 
           <div className="grid gap-2">
             <Label htmlFor="plan">Plan</Label>
-            <Select value={plan} onValueChange={(value) => setPlan(value as CompanyPlan)}>
-              <SelectTrigger id="plan">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {PLAN_OPTIONS.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Controller
+              name="plan"
+              control={control}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger id="plan">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLAN_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
-        </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)} disabled={isPending}>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} disabled={!isValid || isPending}>
-            {isPending ? "Creating…" : "Create company"}
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isPending}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={!isValid || isPending}>
+              {isPending ? "Creating…" : "Create company"}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

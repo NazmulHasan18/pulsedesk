@@ -85,7 +85,7 @@ const alignClass: Record<NonNullable<DataTableColumn<unknown>["align"]>, string>
   center: "text-center",
 };
 
-const MotionTableRow = motion(TableRow);
+const MotionTableRow = motion.create(TableRow);
 const MotionDiv = motion.div;
 
 export function DataTable<T>({

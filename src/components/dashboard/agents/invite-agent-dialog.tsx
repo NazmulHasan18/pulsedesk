@@ -22,6 +22,7 @@ import { useInviteAgent } from "@/hooks/use-agents";
 
 const inviteSchema = z.object({
   email: z.string().email("Enter a valid email"),
+  name: z.string().min(1, "Name is required"),
   role: z.enum(["AGENT", "ADMIN"]),
 });
 
@@ -59,6 +60,13 @@ export function InviteAgentDialog() {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="invite-name">Name</Label>
+            <Input id="invite-name" type="text" placeholder="Enter agent's Name" {...form.register("name")} />
+            {form.formState.errors.name && (
+              <p className="text-xs text-danger">{form.formState.errors.name.message}</p>
+            )}
+          </div>
           <div className="space-y-2">
             <Label htmlFor="invite-email">Email</Label>
             <Input

@@ -27,19 +27,30 @@ export interface CompanySettings {
 }
 
 export interface CompanyStats {
-  totalAgents: number;
-  activeAgents: number;
-  totalConversations: number;
-  openConversations: number;
-  avgFirstResponseMins: number;
-  csatScore: number | null;
+  company: Company;
+  stats: {
+    agents: {
+      total: number;
+      active: number;
+      inactive: number;
+    };
+    customers: number;
+    conversations: {
+      total: number;
+      open: number;
+      pending: number;
+      closed: number;
+    };
+    messages: number;
+    faqDocs: number;
+  };
 }
 
 export interface CreateCompanyPayload {
-  name: string;
-  slug: string;
-  plan: CompanyPlan;
-  ownerEmail: string;
+  companyName: string;
+  adminName: string;
+  email: string;
+  plan?: CompanyPlan;
 }
 
 export interface UpdateCompanyPayload {

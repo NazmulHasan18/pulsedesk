@@ -41,6 +41,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}>
         <Provider>
           {children}
+          {/* <OfflineScreen></OfflineScreen> */}
           <Toaster />
         </Provider>
       </body>

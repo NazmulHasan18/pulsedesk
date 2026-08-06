@@ -24,7 +24,7 @@ export function DeleteCompanyDialog({ company, open, onOpenChange }: DeleteCompa
 
   const handleConfirm = () => {
     if (!company) return;
-    deleteCompany(company.id, { onSuccess: () => onOpenChange(false) });
+    deleteCompany(company.publicId, { onSuccess: () => onOpenChange(false) });
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,7 +40,7 @@ export default function CompanySettingsPage() {
           </TabsList>
 
           <TabsContent value="profile" className="mt-4">
-            <ProfileForm name={company.name} slug={company.slug} />
+            <ProfileForm name={company.name} slug={company.name} />
           </TabsContent>
 
           <TabsContent value="preferences" className="mt-4">
@@ -81,20 +81,12 @@ function ProfileForm({ name: initialName, slug }: { name: string; slug: string }
 }
 
 function SettingsForm() {
-  const { data: company } = useMyCompany();
+  // const { data: company } = useMyCompany();
   const { mutate: updateSettings, isPending } = useUpdateMyCompanySettings();
 
   const [supportEmail, setSupportEmail] = useState("");
   const [autoAssignAgents, setAutoAssignAgents] = useState(false);
   const [aiFirstResponse, setAiFirstResponse] = useState(true);
-
-  useEffect(() => {
-    if (company) {
-      // Falls back to sensible defaults until GET /me/profile includes settings inline,
-      // or swap this for a dedicated settings query if the backend returns one.
-      setSupportEmail(company.ownerEmail);
-    }
-  }, [company]);
 
   return (
     <div className="max-w-lg rounded-2xl border border-line bg-surface p-5">

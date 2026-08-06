@@ -14,14 +14,14 @@ interface StatConfig {
 }
 
 const STAT_CONFIG: StatConfig[] = [
-  { label: "Total agents", value: (s) => String(s.totalAgents) },
-  { label: "Active agents", value: (s) => String(s.activeAgents), accent: "text-signal-ink" },
-  { label: "Open conversations", value: (s) => String(s.openConversations), accent: "text-amber-ink" },
-  { label: "Total conversations", value: (s) => String(s.totalConversations) },
-  { label: "Avg first response", value: (s) => `${s.avgFirstResponseMins}m` },
+  { label: "Total agents", value: (s) => String(s.stats.agents.total) },
+  { label: "Active agents", value: (s) => String(s.stats.agents.active), accent: "text-signal-ink" },
+  { label: "Open conversations", value: (s) => String(s.stats.conversations.open), accent: "text-amber-ink" },
+  { label: "Total conversations", value: (s) => String(s.stats.conversations.total) },
+  { label: "Total Faq Docs", value: (s) => `${s.stats.faqDocs}` },
   {
-    label: "CSAT",
-    value: (s) => (s?.csatScore === null ? "—" : `${s?.csatScore?.toFixed(1)}%`),
+    label: "Total Customers",
+    value: (s) => String(s?.stats.customers),
     accent: "text-indigo",
   },
 ];
@@ -36,7 +36,6 @@ export function CompanyStatsCards({ stats, isLoading }: CompanyStatsCardsProps) 
       </div>
     );
   }
-
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
       {STAT_CONFIG.map((stat, i) => (

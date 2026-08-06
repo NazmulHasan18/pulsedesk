@@ -17,9 +17,9 @@ interface CompanyDetailPageProps {
 
 export default function CompanyDetailPage({ params }: CompanyDetailPageProps) {
   const { companyId } = use(params);
-  const { data: company, isLoading } = useCompany(companyId);
+  const { data: companyData, isLoading } = useCompany(companyId);
   const { data: stats, isLoading: statsLoading } = useCompanyStats(companyId);
-
+  const company = companyData?.data;
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
@@ -43,7 +43,7 @@ export default function CompanyDetailPage({ params }: CompanyDetailPageProps) {
       </div>
     );
   }
-
+  console.log(company);
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -85,7 +85,7 @@ export default function CompanyDetailPage({ params }: CompanyDetailPageProps) {
         </div>
       </div>
 
-      <CompanyStatsCards stats={stats} isLoading={statsLoading} />
+      <CompanyStatsCards stats={stats?.data} isLoading={statsLoading} />
 
       <div className="rounded-2xl border border-line bg-surface p-5">
         <h2 className="font-display text-base font-semibold text-ink">Widget key</h2>

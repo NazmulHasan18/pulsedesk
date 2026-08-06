@@ -28,7 +28,7 @@ function EditCompanyForm({ company, onOpenChange }: EditCompanyFormProps) {
   const [plan, setPlan] = useState<CompanyPlan>(company.plan);
   const [status, setStatus] = useState<CompanyStatus>(company?.status || "ACTIVE");
 
-  const { mutate: updateCompany, isPending } = useUpdateCompany(company.id);
+  const { mutate: updateCompany, isPending } = useUpdateCompany(company.publicId);
 
   const handleSubmit = () => {
     updateCompany({ name, plan, status }, { onSuccess: () => onOpenChange(false) });
@@ -88,17 +88,17 @@ function EditCompanyForm({ company, onOpenChange }: EditCompanyFormProps) {
 }
 
 export function EditCompanySheet({ company, open, onOpenChange }: EditCompanySheetProps) {
-  const formKey = company ? `${company.id}-${open ? "open" : "closed"}` : "empty";
-
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent key={formKey} className="sm:max-w-md">
+      <SheetContent className="sm:max-w-md">
         <SheetHeader>
           <SheetTitle>Edit company</SheetTitle>
           {/* <SheetDescription>{company?.slug}</SheetDescription> */}
         </SheetHeader>
 
-        {company ? <EditCompanyForm company={company} onOpenChange={onOpenChange} /> : null}
+        {company ? (
+          <EditCompanyForm key={company.publicId} company={company} onOpenChange={onOpenChange} />
+        ) : null}
       </SheetContent>
     </Sheet>
   );

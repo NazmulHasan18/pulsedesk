@@ -10,9 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormError } from "@/components/ui/form-error";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type LoginFormValues = {
   email: string;
@@ -36,14 +37,14 @@ const demoAccounts: DemoAccountOption[] = [
   },
   {
     label: "Company Admin",
-    email: "nazmul@gmail.com",
-    password: "12345678",
+    email: "admin@khati-vai.com",
+    password: "TemporaryPassword123!",
     superadmin: false,
   },
   {
     label: "Company Agent",
     email: "agent1@khativai.com",
-    password: "12345678",
+    password: "PD-uFYTdlVPqIw_",
     superadmin: false,
   },
 ];
@@ -51,7 +52,7 @@ const demoAccounts: DemoAccountOption[] = [
 export default function LoginPage() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [formError, setFormError] = React.useState<string | null>(null);
-
+  const { status } = useSession();
   const router = useRouter();
   const {
     register,
@@ -63,6 +64,55 @@ export default function LoginPage() {
     defaultValues: { email: "", password: "", superadmin: false },
   });
 
+  React.useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return (
+      <AuthShell
+        eyebrow="Welcome back"
+        title="Sign in to PulseDesk"
+        subtitle="Jump back into your inbox and pick up where your agents or AI left off."
+        footer={<Skeleton className="h-4 w-full" />}
+      >
+        <div className="space-y-5">
+          {/* Demo buttons */}
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-32" />
+            <div className="grid gap-2 sm:grid-cols-3">
+              <Skeleton className="h-9 w-full rounded-md" />
+              <Skeleton className="h-9 w-full rounded-md" />
+              <Skeleton className="h-9 w-full rounded-md" />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+
+          {/* Password */}
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+
+          {/* Checkbox */}
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-4 rounded" />
+            <Skeleton className="h-4 w-36" />
+          </div>
+
+          {/* Button */}
+          <Skeleton className="h-10 w-full rounded-md" />
+        </div>
+      </AuthShell>
+    );
+  }
   const onSubmit = async (values: LoginFormValues) => {
     setFormError(null);
     try {

@@ -1,4 +1,5 @@
 import { fetcher } from "@/lib/fetcher";
+import { ApiResponse } from "@/types/apiResponse";
 import type {
   Company,
   CompanyStats,
@@ -32,13 +33,13 @@ const listCompanies = async (
 };
 
 // GET /:companyId (superadmin)
-const getCompany = async (companyId: string, token?: string): Promise<Company> => {
-  return fetcher<Company>(`${BASE}/${companyId}`, { token });
+const getCompany = async (companyId: string, token?: string): Promise<ApiResponse<Company>> => {
+  return fetcher<ApiResponse<Company>>(`${BASE}/${companyId}`, { token });
 };
 
 // GET /:companyId/stats (superadmin)
-const getCompanyStats = async (companyId: string, token?: string): Promise<CompanyStats> => {
-  return fetcher<CompanyStats>(`${BASE}/${companyId}/stats`, { token });
+const getCompanyStats = async (companyId: string, token?: string): Promise<ApiResponse<CompanyStats>> => {
+  return fetcher<ApiResponse<CompanyStats>>(`${BASE}/${companyId}/stats`, { token });
 };
 
 // POST / (superadmin)
