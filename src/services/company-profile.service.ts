@@ -1,4 +1,5 @@
 import { fetcher } from "@/lib/fetcher";
+import { ApiResponse } from "@/types/apiResponse";
 import type {
   Company,
   CompanySettings,
@@ -8,8 +9,8 @@ import type {
 } from "@/types/company";
 
 // GET /me/profile (agent, agentAdmin)
-const getMyCompany = async (token?: string): Promise<Company> => {
-  return fetcher<Company>("/companies/me/profile", { token });
+const getMyCompany = async (token?: string): Promise<ApiResponse<Company>> => {
+  return fetcher<ApiResponse<Company>>("/companies/me/profile", { token });
 };
 
 // PATCH /me/profile (agent, agentAdmin)
@@ -34,8 +35,8 @@ const updateMyCompanySettings = async (
 };
 
 // GET /me/stats (agent, agentAdmin)
-const getMyCompanyStats = async (token?: string): Promise<CompanyStats> => {
-  return fetcher<CompanyStats>("/companies/me/stats", { token });
+const getMyCompanyStats = async (token?: string): Promise<ApiResponse<CompanyStats>> => {
+  return fetcher<ApiResponse<CompanyStats>>("/companies/me/stats", { token });
 };
 
 export const CompanyProfileService = {

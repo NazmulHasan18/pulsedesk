@@ -16,9 +16,12 @@ import {
 } from "@/hooks/useMyCompany";
 
 export default function CompanySettingsPage() {
-  const { data: company, isLoading } = useMyCompany();
-  const { data: stats, isLoading: statsLoading } = useMyCompanyStats();
-
+  const { data: companyData, isLoading } = useMyCompany();
+  const { data: statsData, isLoading: statsLoading } = useMyCompanyStats();
+  const company = companyData?.data;
+  const stats = statsData?.data;
+  console.log(company);
+  console.log(stats);
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -72,7 +75,7 @@ function ProfileForm({ name: initialName, slug }: { name: string; slug: string }
       </div>
 
       <div className="mt-5 flex justify-end">
-        <Button onClick={() => updateMyCompany({ name })} disabled={isPending || name.trim().length < 2}>
+        <Button onClick={() => updateMyCompany({ name })} disabled={isPending || name?.trim()?.length < 2}>
           {isPending ? "Saving…" : "Save changes"}
         </Button>
       </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { MoreHorizontal, Search } from "lucide-react";
+import { Building2, MoreHorizontal, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -41,8 +41,9 @@ export default function CompaniesPage() {
       cell: (company) => (
         <Link
           href={`/dashboard/companies/${company.publicId}`}
-          className="font-medium text-ink hover:underline"
+          className="flex gap-2 items-center font-medium text-ink hover:underline"
         >
+          <Building2 className="w-4 h-4"></Building2>
           {company.name}
           {/* <span className="ml-2 text-xs text-muted-foreground">{company.}</span> */}
         </Link>
@@ -108,7 +109,7 @@ export default function CompaniesPage() {
         columns={columns}
         isLoading={isLoading}
         isFetching={isFetching}
-        getRowId={(company) => company.id}
+        getRowId={(company) => company.publicId}
         pagination={{
           page,
           totalPages: data?.meta.totalPages ?? 1,
@@ -130,7 +131,7 @@ export default function CompaniesPage() {
             <DropdownMenuContent align="end">
               <DropdownMenuItem
                 render={(props) => (
-                  <Link {...props} href={`/dashboard/companies/${company.id}`}>
+                  <Link {...props} href={`/dashboard/companies/${company.publicId}`}>
                     View details
                   </Link>
                 )}
