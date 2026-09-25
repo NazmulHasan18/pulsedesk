@@ -4,7 +4,7 @@ import { NextAuthOptions } from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.INTERNAL_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
 async function refreshAccessToken(refreshToken: string) {
   const res = await fetch(`${API_URL}/auth/refresh-token`, {
