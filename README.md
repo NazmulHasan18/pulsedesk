@@ -1,12 +1,12 @@
-# PulseDesk — Landing Page
+# PulseDesk frontend
 
-The marketing landing page for **PulseDesk**, an AI-augmented live support
-chat platform. Built with Next.js (App Router), TypeScript, Tailwind CSS v4,
-and hand-rolled shadcn-style UI primitives (Radix + `class-variance-authority`).
+Next.js App Router application containing the public landing page and current
+company dashboard shell (login/signup, dashboard, agents, companies, settings,
+and inbox routes). API-backed product screens are still being wired to the
+backend; landing-page demos are not live customer conversations.
 
-> Note: this repo only ships the public landing page. The product itself
-> (widget embed script, Socket.io realtime layer, Prisma schema, dashboards)
-> is the next build phase.
+The product API and widget live in their own repositories; this application
+contains the landing page and the current dashboard shell.
 
 ## Stack
 
@@ -25,18 +25,20 @@ and hand-rolled shadcn-style UI primitives (Radix + `class-variance-authority`).
 
 ## Getting started
 
-```bash
-npm install
-npm run dev
-```
+Copy `.env.example` to `.env`, then run `pnpm install` and `pnpm dev`.
 
 Open http://localhost:3000
 
 ```bash
-npm run build   # production build
-npm run start   # serve the production build
-npm run lint    # eslint
+pnpm build   # production build
+pnpm start   # serve the production build
+pnpm lint    # eslint
 ```
+
+The default API is `http://localhost:5000/api/v1`. Set `NEXT_PUBLIC_API_URL`
+for browser requests and `INTERNAL_API_URL` for server-side/container requests.
+The frontend does not own the widget distribution; widget assets are built and
+published from `pulsedesk-widget` only.
 
 ## Structure
 
