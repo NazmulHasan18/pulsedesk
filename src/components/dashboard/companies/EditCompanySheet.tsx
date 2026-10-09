@@ -28,10 +28,11 @@ function EditCompanyForm({ company, onOpenChange }: EditCompanyFormProps) {
   const [plan, setPlan] = useState<CompanyPlan>(company.plan);
   const [status, setStatus] = useState<CompanyStatus>(company?.status || "ACTIVE");
 
-  const { mutate: updateCompany, isPending } = useUpdateCompany(company.publicId);
+  const { mutateAsync: updateCompany, isPending } = useUpdateCompany(company.publicId);
 
-  const handleSubmit = () => {
-    updateCompany({ name, plan, status }, { onSuccess: () => onOpenChange(false) });
+  const handleSubmit = async () => {
+    await updateCompany({ name, plan, status });
+    onOpenChange(false);
   };
 
   return (

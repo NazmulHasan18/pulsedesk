@@ -20,11 +20,12 @@ interface DeleteCompanyDialogProps {
 }
 
 export function DeleteCompanyDialog({ company, open, onOpenChange }: DeleteCompanyDialogProps) {
-  const { mutate: deleteCompany, isPending } = useDeleteCompany();
+  const { mutateAsync: deleteCompany, isPending } = useDeleteCompany();
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!company) return;
-    deleteCompany(company.publicId, { onSuccess: () => onOpenChange(false) });
+    await deleteCompany(company.publicId);
+    onOpenChange(false);
   };
 
   return (

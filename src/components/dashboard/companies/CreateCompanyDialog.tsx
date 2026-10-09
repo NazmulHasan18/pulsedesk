@@ -30,7 +30,7 @@ const PLAN_OPTIONS = [
 
 export function CreateCompanyDialog() {
   const [open, setOpen] = useState(false);
-  const { mutate: createCompany, isPending } = useCreateCompany();
+  const { mutateAsync: createCompany, isPending } = useCreateCompany();
 
   const {
     register,
@@ -48,21 +48,15 @@ export function CreateCompanyDialog() {
     },
   });
 
-  const onSubmit = (values: CreateCompanyPayload) => {
-    createCompany(
-      {
-        companyName: values.companyName,
-        adminName: values.adminName,
-        email: values.email,
-        plan: values.plan,
-      },
-      {
-        onSuccess: () => {
-          setOpen(false);
-          reset();
-        },
-      },
-    );
+  const onSubmit = async (values: CreateCompanyPayload) => {
+    await createCompany({
+      companyName: values.companyName,
+      adminName: values.adminName,
+      email: values.email,
+      plan: values.plan,
+    });
+    setOpen(false);
+    reset();
   };
 
   return (
