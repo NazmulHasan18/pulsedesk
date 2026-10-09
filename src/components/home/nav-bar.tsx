@@ -113,7 +113,7 @@ export function NavBar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Link href="/profile" className="cursor-pointer flex gap-2 items-center">
+                      <Link href="/dashboard/profile" className="cursor-pointer flex gap-2 items-center">
                         <User className="mr-2 h-4 w-4" />
                         Profile
                       </Link>
@@ -192,7 +192,7 @@ export function NavBar() {
                   Dashboard
                 </Link>
                 <Link
-                  href="/profile"
+                  href="/dashboard/profile"
                   onClick={closeMobile}
                   className="flex items-center gap-2 rounded-md px-2 py-2 text-sm text-ink hover:bg-surface"
                 >

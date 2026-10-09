@@ -1,13 +1,13 @@
-import { NavBar } from "@/components/site/nav-bar";
-import { Hero } from "@/components/site/hero";
-import { HowItWorks } from "@/components/site/how-it-works";
-import { EmbedSection } from "@/components/site/embed-section";
-import { Features } from "@/components/site/features";
-import { DashboardPreview } from "@/components/site/dashboard-preview";
-import { StatsSection } from "@/components/site/stats-section";
-import { FaqSection } from "@/components/site/faq-section";
-import { CtaSection } from "@/components/site/cta-section";
-import { Footer } from "@/components/site/footer";
+import { NavBar } from "@/components/home/nav-bar";
+import { Hero } from "@/components/home/hero";
+import { HowItWorks } from "@/components/home/how-it-works";
+import { EmbedSection } from "@/components/home/embed-section";
+import { Features } from "@/components/home/features";
+import { DashboardPreview } from "@/components/home/dashboard-preview";
+import { StatsSection } from "@/components/home/stats-section";
+import { FaqSection } from "@/components/home/faq-section";
+import { CtaSection } from "@/components/home/cta-section";
+import { Footer } from "@/components/home/footer";
 
 export default function Home() {
   const user = null;

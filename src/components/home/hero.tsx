@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ChatWidgetDemo } from "@/components/site/chat-widget-demo";
+import { ChatWidgetDemo } from "@/components/home/chat-widget-demo";
 
 export function Hero() {
   return (

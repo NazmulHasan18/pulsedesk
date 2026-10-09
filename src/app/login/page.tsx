@@ -123,14 +123,13 @@ export default function LoginPage() {
         type: values.superadmin ? "admin" : "user",
         redirect: false,
       });
-      console.log(response);
+
       if (response?.error) {
         toast.error("Invalid email or password.");
       } else {
         router.push(`/dashboard`);
         toast.success("User login success.", { position: "top-right" });
       }
-      console.log("login submit", values);
     } catch {
       setFormError("Couldn't sign you in. Check your details and try again.");
     }

@@ -10,10 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormError } from "@/components/ui/form-error";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type SignupFormValues = {
-  name: string;
-  company: string;
+  adminName: string;
+  companyName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -21,19 +24,20 @@ type SignupFormValues = {
 };
 
 export default function SignupPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
-  const [formError, setFormError] = React.useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignupFormValues>({
     mode: "onBlur",
     defaultValues: {
-      name: "",
-      company: "",
+      adminName: "",
+      companyName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -41,15 +45,82 @@ export default function SignupPage() {
     },
   });
 
+  type ApiErrorResponse = {
+    success: false;
+    message: string;
+    errorSources?: {
+      path: string;
+      message: string;
+    }[];
+  };
+
   const onSubmit = async (values: SignupFormValues) => {
-    setFormError(null);
     try {
-      // TODO: wire up to the real auth endpoint once it exists.
-      // await fetch("/api/auth/signup", { method: "POST", body: JSON.stringify(values) })
-      await new Promise((resolve) => setTimeout(resolve, 900));
-      console.log("signup submit", values);
+      const response = await fetch("http://localhost:5000/api/v1/auth/register-company", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        const apiError = data as ApiErrorResponse;
+
+        if (apiError.errorSources?.length) {
+          apiError.errorSources.forEach(({ path, message }) => {
+            // Convert "body.adminName" to "adminName"
+            const field = path.replace(/^body\./, "");
+
+            const validFields: (keyof SignupFormValues)[] = [
+              "adminName",
+              "companyName",
+              "email",
+              "password",
+              "confirmPassword",
+              "terms",
+            ];
+
+            if (validFields.includes(field as keyof SignupFormValues)) {
+              setError(field as keyof SignupFormValues, {
+                type: "server",
+                message,
+              });
+            }
+          });
+        } else {
+          setError("root.serverError", {
+            type: "server",
+            message: apiError.message || "Something went wrong.",
+          });
+        }
+
+        return;
+      } else {
+        const response = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          type: "user",
+          redirect: false,
+        });
+
+        if (response?.error) {
+          toast.error("Invalid email or password.");
+        } else {
+          router.push(`/dashboard`);
+          toast.success("User login success.", { position: "top-right" });
+        }
+      }
+
+      // Handle successful registration here
+      console.log("Registration successful:", data);
     } catch {
-      setFormError("Couldn't create your workspace. Please try again.");
+      setError("root.serverError", {
+        type: "server",
+        message: "Unable to connect to the server. Please try again.",
+      });
     }
   };
 
@@ -69,31 +140,31 @@ export default function SignupPage() {
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
         <div>
-          <Label htmlFor="name">Full name</Label>
+          <Label htmlFor="adminName">Full name</Label>
           <Input
-            id="name"
+            id="adminName"
             type="text"
-            autoComplete="name"
+            autoComplete="adminName"
             placeholder="Amara Chen"
-            state={errors.name ? "error" : "default"}
-            aria-invalid={!!errors.name}
-            {...register("name", { required: "Enter your name." })}
+            state={errors.adminName ? "error" : "default"}
+            aria-invalid={!!errors.adminName}
+            {...register("adminName", { required: "Enter your name." })}
           />
-          <FormError message={errors.name?.message} />
+          <FormError message={errors.adminName?.message} />
         </div>
 
         <div>
-          <Label htmlFor="company">Company name</Label>
+          <Label htmlFor="companyName">Company name</Label>
           <Input
-            id="company"
+            id="companyName"
             type="text"
             autoComplete="organization"
             placeholder="Acme Inc."
-            state={errors.company ? "error" : "default"}
-            aria-invalid={!!errors.company}
-            {...register("company", { required: "Enter your company name." })}
+            state={errors.companyName ? "error" : "default"}
+            aria-invalid={!!errors.companyName}
+            {...register("companyName", { required: "Enter your company name." })}
           />
-          <FormError message={errors.company?.message} />
+          <FormError message={errors.companyName?.message} />
         </div>
 
         <div>
@@ -195,11 +266,11 @@ export default function SignupPage() {
           <FormError message={errors.terms?.message} />
         </div>
 
-        {formError && (
+        {/* {formError && (
           <p role="alert" className="text-sm text-danger">
             {formError}
           </p>
-        )}
+        )} */}
 
         <Button type="submit" disabled={isSubmitting || !!errors.confirmPassword?.message} className="w-full">
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

@@ -180,7 +180,7 @@ function PresencePulse({ online }: { online: boolean }) {
 
 export default function AdminAgentDetailPage() {
   const [copied, setCopied] = useState(false);
-  const { data, isLoading, isFetching } = useAgentDetails({
+  const { data } = useAgentDetails({
     agentId: agent.publicId,
   });
   console.log(data);
