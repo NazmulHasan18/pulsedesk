@@ -63,7 +63,7 @@ export function Features() {
         {features.map((f) => (
           <Card
             key={f.title}
-            className="group p-7 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+            className="group p-7 transition-all hover:-translate-y-1 hover:shadow-(--shadow-card-hover)"
           >
             <div className={`mb-5 flex h-11 w-11 items-center justify-center rounded-xl ${tintMap[f.tint]}`}>
               <f.icon className="h-5 w-5" />

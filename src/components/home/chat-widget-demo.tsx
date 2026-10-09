@@ -183,7 +183,7 @@ export function ChatWidgetDemo() {
   return (
     <div className="relative">
       {/* mock browser chrome */}
-      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-[var(--shadow-widget)]">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-(--shadow-widget)">
         <div className="flex items-center gap-1.5 border-b border-line bg-paper px-4 py-2.5">
           <span className="h-2.5 w-2.5 rounded-full bg-amber" />
           <span className="h-2.5 w-2.5 rounded-full bg-amber-ink" />

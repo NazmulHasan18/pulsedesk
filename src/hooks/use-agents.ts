@@ -1,121 +1,33 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { toast } from "sonner";
-import { AgentService } from "@/services/agent.service";
-import type {
-  AgentListParams,
-  AgentStatus,
-  CreateAgentPayload,
-  InviteAgentPayload,
-  UpdateAgentPayload,
-} from "@/types/agent";
 import { useSession } from "next-auth/react";
-
-const AGENTS_KEY = ["agents"] as const;
+import {
+  useAgentQuery,
+  useAgentsQuery,
+  useCreateAgentMutation,
+  useDeleteAgentMutation,
+  useInviteAgentMutation,
+  useResetAgentPasswordMutation,
+  useSetAgentStatusMutation,
+  useUpdateAgentMutation,
+} from "@/lib/api";
+import type { AgentListParams, AgentStatus, CreateAgentPayload, InviteAgentPayload, UpdateAgentPayload } from "@/types/agent";
 
 export function useAgents(params: AgentListParams) {
   const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: [...AGENTS_KEY, params],
-    queryFn: () => AgentService.list(params, token),
-    placeholderData: (prev) => prev,
-    enabled: !!token,
-  });
+  return useAgentsQuery({ params, token: session?.accessToken }, { skip: !session?.accessToken });
 }
 export function useAgentDetails({ agentId }: { agentId: string }) {
   const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: [...AGENTS_KEY, agentId],
-    queryFn: () => AgentService.getById(agentId, token),
-    placeholderData: (prev) => prev,
-    enabled: !!token,
-  });
+  return useAgentQuery({ agentId, token: session?.accessToken }, { skip: !agentId || !session?.accessToken });
 }
-
-export function useInviteAgent() {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (payload: InviteAgentPayload) => AgentService.invite(payload, token),
-    onSuccess: () => {
-      toast.success("Invite sent");
-      qc.invalidateQueries({ queryKey: AGENTS_KEY });
-    },
-    onError: () => toast.error("Couldn't send the invite"),
-  });
+function mutation<T>(trigger: (value: T) => { unwrap: () => Promise<unknown> }, success: string, failure: string) {
+  return (value: T) => trigger(value).unwrap().then(() => toast.success(success)).catch(() => toast.error(failure));
 }
-
-export function useCreateAgent() {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (payload: CreateAgentPayload) => AgentService.create(payload, token),
-    onSuccess: () => {
-      toast.success("Agent added");
-      qc.invalidateQueries({ queryKey: AGENTS_KEY });
-    },
-    onError: () => toast.error("Couldn't add the agent"),
-  });
-}
-
-export function useUpdateAgent() {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ agentId, payload }: { agentId: string; payload: UpdateAgentPayload }) =>
-      AgentService.update(agentId, payload, token),
-    onSuccess: () => {
-      toast.success("Agent updated");
-      qc.invalidateQueries({ queryKey: AGENTS_KEY });
-    },
-    onError: () => toast.error("Couldn't update the agent"),
-  });
-}
-
-export function useSetAgentStatus() {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: ({ agentId, status }: { agentId: string; status: AgentStatus }) =>
-      AgentService.setStatus(agentId, status, token),
-    onSuccess: () => {
-      toast.success("Status updated");
-      qc.invalidateQueries({ queryKey: AGENTS_KEY });
-    },
-    onError: () => toast.error("Couldn't update status"),
-  });
-}
-
-export function useDeleteAgent() {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (agentId: string) => AgentService.remove(agentId, token),
-    onSuccess: () => {
-      toast.success("Agent removed");
-      qc.invalidateQueries({ queryKey: AGENTS_KEY });
-    },
-    onError: () => toast.error("Couldn't remove the agent"),
-  });
-}
-
-export function useResetAgentPassword() {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  return useMutation({
-    mutationFn: (agentId: string) => AgentService.resetPassword(agentId, token),
-    onSuccess: () => toast.success("Password reset — new credentials emailed"),
-    onError: () => toast.error("Couldn't reset the password"),
-  });
-}
+export function useInviteAgent() { const { data: s } = useSession(); const [trigger, state] = useInviteAgentMutation(); return { ...state, mutate: mutation((payload: InviteAgentPayload) => trigger({ payload, token: s?.accessToken }), "Invite sent", "Couldn't send the invite") }; }
+export function useCreateAgent() { const { data: s } = useSession(); const [trigger, state] = useCreateAgentMutation(); return { ...state, mutate: mutation((payload: CreateAgentPayload) => trigger({ payload, token: s?.accessToken }), "Agent added", "Couldn't add the agent") }; }
+export function useUpdateAgent() { const { data: s } = useSession(); const [trigger, state] = useUpdateAgentMutation(); return { ...state, mutate: mutation((value: { agentId: string; payload: UpdateAgentPayload }) => trigger({ ...value, token: s?.accessToken }), "Agent updated", "Couldn't update the agent") }; }
+export function useSetAgentStatus() { const { data: s } = useSession(); const [trigger, state] = useSetAgentStatusMutation(); return { ...state, mutate: mutation((value: { agentId: string; status: AgentStatus }) => trigger({ ...value, token: s?.accessToken }), "Status updated", "Couldn't update status") }; }
+export function useDeleteAgent() { const { data: s } = useSession(); const [trigger, state] = useDeleteAgentMutation(); return { ...state, mutate: mutation((agentId: string) => trigger({ agentId, token: s?.accessToken }), "Agent removed", "Couldn't remove the agent") }; }
+export function useResetAgentPassword() { const { data: s } = useSession(); const [trigger, state] = useResetAgentPasswordMutation(); return { ...state, mutate: mutation((agentId: string) => trigger({ agentId, token: s?.accessToken }), "Password reset — new credentials emailed", "Couldn't reset the password") }; }

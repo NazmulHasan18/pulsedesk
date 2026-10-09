@@ -1,103 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { CompanyService } from "@/services/company.service";
-import type { CreateCompanyPayload, ListCompaniesParams, UpdateCompanyPayload } from "@/types/company";
 import { useSession } from "next-auth/react";
+import { useCompaniesQuery, useCompanyQuery, useCompanyStatsQuery, useCreateCompanyMutation, useDeleteCompanyMutation, useUpdateCompanyMutation } from "@/lib/api";
+import type { CreateCompanyPayload, ListCompaniesParams, UpdateCompanyPayload } from "@/types/company";
 
-export const companyKeys = {
-  all: ["companies"] as const,
-  lists: () => [...companyKeys.all, "list"] as const,
-  list: (params: ListCompaniesParams) => [...companyKeys.lists(), params] as const,
-  details: () => [...companyKeys.all, "detail"] as const,
-  detail: (id: string) => [...companyKeys.details(), id] as const,
-  stats: (id: string) => [...companyKeys.all, "stats", id] as const,
-};
-
-export const useCompanies = (params: ListCompaniesParams) => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: companyKeys.list(params),
-    queryFn: () => CompanyService.listCompanies(params, token),
-    placeholderData: (previous) => previous,
-    enabled: !!token,
-  });
-};
-
-export const useCompany = (companyId: string) => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: companyKeys.detail(companyId),
-    queryFn: () => CompanyService.getCompany(companyId, token),
-    enabled: !!companyId && !!token,
-  });
-};
-
-export const useCompanyStats = (companyId: string) => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: companyKeys.stats(companyId),
-    queryFn: () => CompanyService.getCompanyStats(companyId, token),
-    enabled: !!companyId && !!token,
-  });
-};
-
-export const useCreateCompany = () => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (payload: CreateCompanyPayload) => CompanyService.createCompany(payload, token),
-    onSuccess: () => {
-      toast.success("Company created");
-      queryClient.invalidateQueries({ queryKey: companyKeys.lists() });
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : "Failed to create company";
-      toast.error(message);
-    },
-  });
-};
-
-export const useUpdateCompany = (companyId: string) => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (payload: UpdateCompanyPayload) => CompanyService.updateCompany(companyId, payload, token),
-    onSuccess: () => {
-      toast.success("Company updated");
-      queryClient.invalidateQueries({ queryKey: companyKeys.detail(companyId) });
-      queryClient.invalidateQueries({ queryKey: companyKeys.lists() });
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : "Failed to update company";
-      toast.error(message);
-    },
-  });
-};
-
-export const useDeleteCompany = () => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (companyId: string) => CompanyService.deleteCompany(companyId, token),
-    onSuccess: () => {
-      toast.success("Company removed");
-      queryClient.invalidateQueries({ queryKey: companyKeys.lists() });
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : "Failed to remove company";
-      toast.error(message);
-    },
-  });
-};
+export const useCompanies = (params: ListCompaniesParams) => { const { data: s } = useSession(); return useCompaniesQuery({ params, token: s?.accessToken }, { skip: !s?.accessToken }); };
+export const useCompany = (companyId: string) => { const { data: s } = useSession(); return useCompanyQuery({ companyId, token: s?.accessToken }, { skip: !companyId || !s?.accessToken }); };
+export const useCompanyStats = (companyId: string) => { const { data: s } = useSession(); return useCompanyStatsQuery({ companyId, token: s?.accessToken }, { skip: !companyId || !s?.accessToken }); };
+export const useCreateCompany = () => { const { data: s } = useSession(); const [trigger, state] = useCreateCompanyMutation(); return { ...state, mutate: (payload: CreateCompanyPayload) => trigger({ payload, token: s?.accessToken }).unwrap().then(() => toast.success("Company created")).catch((e) => toast.error(e.message || "Failed to create company")) }; };
+export const useUpdateCompany = (companyId: string) => { const { data: s } = useSession(); const [trigger, state] = useUpdateCompanyMutation(); return { ...state, mutate: (payload: UpdateCompanyPayload) => trigger({ companyId, payload, token: s?.accessToken }).unwrap().then(() => toast.success("Company updated")).catch((e) => toast.error(e.message || "Failed to update company")) }; };
+export const useDeleteCompany = () => { const { data: s } = useSession(); const [trigger, state] = useDeleteCompanyMutation(); return { ...state, mutate: (companyId: string) => trigger({ companyId, token: s?.accessToken }).unwrap().then(() => toast.success("Company removed")).catch((e) => toast.error(e.message || "Failed to remove company")) }; };

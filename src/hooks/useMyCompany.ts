@@ -1,69 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { CompanyProfileService } from "@/services/company-profile.service";
-import type { UpdateCompanyPayload, UpdateCompanySettingsPayload } from "@/types/company";
 import { useSession } from "next-auth/react";
+import { useMyCompanyQuery, useMyCompanyStatsQuery, useUpdateMyCompanyMutation, useUpdateMyCompanySettingsMutation } from "@/lib/api";
+import type { UpdateCompanyPayload, UpdateCompanySettingsPayload } from "@/types/company";
 
-export const myCompanyKeys = {
-  profile: ["my-company", "profile"] as const,
-  stats: ["my-company", "stats"] as const,
-};
-
-export const useMyCompany = () => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: myCompanyKeys.profile,
-    queryFn: () => CompanyProfileService.getMyCompany(token),
-    enabled: !!token,
-  });
-};
-
-export const useMyCompanyStats = () => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-
-  return useQuery({
-    queryKey: myCompanyKeys.stats,
-    queryFn: () => CompanyProfileService.getMyCompanyStats(token),
-    enabled: !!token,
-  });
-};
-
-export const useUpdateMyCompany = () => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (payload: UpdateCompanyPayload) => CompanyProfileService.updateMyCompany(payload, token),
-    onSuccess: () => {
-      toast.success("Profile updated");
-      queryClient.invalidateQueries({ queryKey: myCompanyKeys.profile });
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : "Failed to update profile";
-      toast.error(message);
-    },
-  });
-};
-
-export const useUpdateMyCompanySettings = () => {
-  const { data: session } = useSession();
-  const token = session?.accessToken;
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (payload: UpdateCompanySettingsPayload) =>
-      CompanyProfileService.updateMyCompanySettings(payload, token),
-    onSuccess: () => {
-      toast.success("Settings saved");
-      queryClient.invalidateQueries({ queryKey: myCompanyKeys.profile });
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : "Failed to save settings";
-      toast.error(message);
-    },
-  });
-};
+export const useMyCompany = () => { const { data: s } = useSession(); return useMyCompanyQuery({ token: s?.accessToken }, { skip: !s?.accessToken }); };
+export const useMyCompanyStats = () => { const { data: s } = useSession(); return useMyCompanyStatsQuery({ token: s?.accessToken }, { skip: !s?.accessToken }); };
+export const useUpdateMyCompany = () => { const { data: s } = useSession(); const [trigger, state] = useUpdateMyCompanyMutation(); return { ...state, mutate: (payload: UpdateCompanyPayload) => trigger({ payload, token: s?.accessToken }).unwrap().then(() => toast.success("Profile updated")).catch((e) => toast.error(e.message || "Failed to update profile")) }; };
+export const useUpdateMyCompanySettings = () => { const { data: s } = useSession(); const [trigger, state] = useUpdateMyCompanySettingsMutation(); return { ...state, mutate: (payload: UpdateCompanySettingsPayload) => trigger({ payload, token: s?.accessToken }).unwrap().then(() => toast.success("Settings saved")).catch((e) => toast.error(e.message || "Failed to save settings")) }; };
