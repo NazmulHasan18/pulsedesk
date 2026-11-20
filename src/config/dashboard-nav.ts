@@ -1,20 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  LayoutDashboard,
-  Inbox,
-  MessageSquareText,
-  Users,
-  Globe,
-  BookOpenText,
-  BarChart3,
-  CreditCard,
-  Settings,
-  Building2,
-  ShieldCheck,
-  ServerCog,
-  LifeBuoy,
-  Flag,
-} from "lucide-react";
+import { LayoutDashboard, Inbox, MessageSquareText, Users, Globe, Settings, Building2 } from "lucide-react";
 import { Session } from "next-auth";
 
 export interface NavItem {
@@ -29,11 +14,14 @@ export interface NavSection {
   items: NavItem[];
 }
 
+// Pages that are still placeholders (analytics, billing, knowledge base, users,
+// escalations, flags, system, roles) stay out of the nav until they are built.
+
 // --- AGENT (chat-only) ---------------------------------------------------
 export const agentNav: NavSection[] = [
   {
     items: [
-      { title: "Inbox", href: "/dashboard/inbox", icon: Inbox, badge: 5 },
+      { title: "Inbox", href: "/dashboard/inbox", icon: Inbox },
       {
         title: "My Conversations",
         href: "/dashboard/conversations",
@@ -49,7 +37,7 @@ export const companyAdminNav: NavSection[] = [
     label: "Workspace",
     items: [
       { title: "Overview", href: "/dashboard", icon: LayoutDashboard },
-      { title: "Inbox", href: "/dashboard/inbox", icon: Inbox, badge: 12 },
+      { title: "Inbox", href: "/dashboard/inbox", icon: Inbox },
     ],
   },
   {
@@ -57,23 +45,11 @@ export const companyAdminNav: NavSection[] = [
     items: [
       { title: "Agents", href: "/dashboard/agents", icon: Users },
       { title: "Widget & Site", href: "/dashboard/widget", icon: Globe },
-      {
-        title: "Knowledge Base",
-        href: "/dashboard/knowledge-base",
-        icon: BookOpenText,
-      },
-    ],
-  },
-  {
-    label: "Insights",
-    items: [
-      { title: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-      { title: "Billing", href: "/dashboard/billing", icon: CreditCard },
     ],
   },
   {
     label: "Company",
-    items: [{ title: "Settings", href: "/dashboard/settings", icon: Settings }],
+    items: [{ title: "Settings", href: "/dashboard/settings/company", icon: Settings }],
   },
 ];
 
@@ -84,26 +60,6 @@ export const superAdminNav: NavSection[] = [
     items: [
       { title: "Overview", href: "/dashboard", icon: LayoutDashboard },
       { title: "Companies", href: "/dashboard/companies", icon: Building2 },
-      { title: "Agents & Users", href: "/dashboard/users", icon: Users },
-    ],
-  },
-  {
-    label: "Operations",
-    items: [
-      { title: "Escalations", href: "/dashboard/escalations", icon: LifeBuoy },
-      { title: "Feature Flags", href: "/dashboard/flags", icon: Flag },
-      { title: "System Health", href: "/dashboard/system", icon: ServerCog },
-    ],
-  },
-  {
-    label: "Business",
-    items: [{ title: "Billing & Plans", href: "/dashboard/billing", icon: CreditCard }],
-  },
-  {
-    label: "Access",
-    items: [
-      { title: "Admin Roles", href: "/dashboard/roles", icon: ShieldCheck },
-      { title: "Settings", href: "/dashboard/settings", icon: Settings },
     ],
   },
 ];

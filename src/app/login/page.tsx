@@ -44,7 +44,7 @@ const demoAccounts: DemoAccountOption[] = [
   {
     label: "Company Agent",
     email: "agent1@khativai.com",
-    password: "PD-uFYTdlVPqIw_",
+    password: "PD-iYQ_2pW4ksGd",
     superadmin: false,
   },
 ];

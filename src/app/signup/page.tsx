@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormError } from "@/components/ui/form-error";
+import { API_URL } from "@/lib/fetcher";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -56,7 +57,7 @@ export default function SignupPage() {
 
   const onSubmit = async (values: SignupFormValues) => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/auth/register-company", {
+      const response = await fetch(`${API_URL}/auth/register-company`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

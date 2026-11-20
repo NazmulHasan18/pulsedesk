@@ -36,7 +36,6 @@ pnpm lint    # eslint
 ```
 
 The default API is `http://localhost:5000/api/v1`. Set `NEXT_PUBLIC_API_URL`
-for browser requests and `INTERNAL_API_URL` for server-side/container requests.
 The frontend does not own the widget distribution; widget assets are built and
 published from `pulsedesk-widget` only.
 
