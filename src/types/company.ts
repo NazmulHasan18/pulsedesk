@@ -18,12 +18,18 @@ export interface Company {
   };
 }
 
+// Mirrors companySettingsSchema in the backend (company.settings.ts).
 export interface CompanySettings {
-  brandColor: string;
-  supportEmail: string;
-  autoAssignAgents: boolean;
-  aiFirstResponse: boolean;
-  officeHoursTimezone: string;
+  displayName?: string;
+  welcomeMessage?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  widgetEnabled?: boolean;
+  allowedOrigins?: string[];
+  supportEmail?: string;
+  autoAssignAgents?: boolean;
+  aiFirstResponse?: boolean;
+  officeHoursTimezone?: string;
 }
 
 export interface CompanyStats {
@@ -37,8 +43,11 @@ export interface CompanyStats {
     customers: number;
     conversations: {
       total: number;
-      open: number;
-      pending: number;
+      open: number; // waiting + active + aiHandled
+      waiting: number;
+      active: number;
+      aiHandled: number;
+      resolved: number;
       closed: number;
     };
     messages: number;
@@ -60,13 +69,7 @@ export interface UpdateCompanyPayload {
   status?: CompanyStatus;
 }
 
-export interface UpdateCompanySettingsPayload {
-  brandColor?: string;
-  supportEmail?: string;
-  autoAssignAgents?: boolean;
-  aiFirstResponse?: boolean;
-  officeHoursTimezone?: string;
-}
+export type UpdateCompanySettingsPayload = CompanySettings;
 
 export interface ListCompaniesParams {
   page?: number;
