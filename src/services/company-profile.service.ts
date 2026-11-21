@@ -29,7 +29,7 @@ const updateMyCompanySettings = async (
 ): Promise<CompanySettings> => {
   return fetcher<CompanySettings>("/companies/me/settings", {
     method: "PATCH",
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ settings: payload }),
     token,
   });
 };

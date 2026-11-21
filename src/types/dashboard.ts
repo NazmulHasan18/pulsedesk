@@ -1,15 +1,11 @@
 // Mirrors backend/src/modules/dashboard/dashboard.interface.ts
 // Keep this in sync with the Prisma enums if they change.
 
-export type ConversationStatus = "OPEN" | "PENDING" | "CLOSED";
+export type ConversationStatus = "WAITING" | "ACTIVE" | "AI_HANDLED" | "RESOLVED" | "CLOSED";
 export type ConversationSource = "AI" | "AGENT";
 export type ConversationPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 
-export interface StatusCounts {
-  OPEN: number;
-  PENDING: number;
-  CLOSED: number;
-}
+export type StatusCounts = Record<ConversationStatus, number>;
 
 export interface SourceCounts {
   AI: number;

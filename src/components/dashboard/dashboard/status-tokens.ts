@@ -11,17 +11,29 @@ interface Token {
 }
 
 export const STATUS_TOKENS: Record<ConversationStatus, Token> = {
-  OPEN: {
-    label: "Open",
+  WAITING: {
+    label: "Waiting",
+    dot: "bg-amber",
+    text: "text-amber-ink",
+    badgeClass: "border-transparent bg-amber-tint text-amber-ink",
+  },
+  ACTIVE: {
+    label: "Active",
     dot: "bg-signal",
     text: "text-signal-ink",
     badgeClass: "border-transparent bg-signal-tint text-signal-ink",
   },
-  PENDING: {
-    label: "Pending",
-    dot: "bg-amber",
-    text: "text-amber-ink",
-    badgeClass: "border-transparent bg-amber-tint text-amber-ink",
+  AI_HANDLED: {
+    label: "AI handled",
+    dot: "bg-indigo",
+    text: "text-indigo-dark",
+    badgeClass: "border-transparent bg-indigo-tint text-indigo-dark",
+  },
+  RESOLVED: {
+    label: "Resolved",
+    dot: "bg-ink",
+    text: "text-ink",
+    badgeClass: "border-line bg-muted text-ink",
   },
   CLOSED: {
     label: "Closed",
@@ -73,6 +85,6 @@ export const SOURCE_TOKENS: Record<ConversationSource, Token> = {
   },
 };
 
-export const STATUS_ORDER: ConversationStatus[] = ["OPEN", "PENDING", "CLOSED"];
+export const STATUS_ORDER: ConversationStatus[] = ["WAITING", "ACTIVE", "AI_HANDLED", "RESOLVED", "CLOSED"];
 export const PRIORITY_ORDER: ConversationPriority[] = ["LOW", "MEDIUM", "HIGH", "URGENT"];
 export const SOURCE_ORDER: ConversationSource[] = ["AI", "AGENT"];
