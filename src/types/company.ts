@@ -8,6 +8,7 @@ export interface Company {
   siteId: string;
   plan: CompanyPlan;
   status?: CompanyStatus;
+  settings?: CompanySettings | null;
   createdAt: string;
   updatedAt: string;
   counts: {
