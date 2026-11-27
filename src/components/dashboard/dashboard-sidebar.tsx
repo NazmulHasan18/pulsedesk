@@ -4,7 +4,14 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronsLeft, ChevronsRight, LogOut, Menu, MoreHorizontal, Circle } from "lucide-react";
+import {
+  ChevronsLeft,
+  ChevronsRight,
+  LogOut,
+  Menu,
+  MoreHorizontal,
+  Circle,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,13 +25,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { getNavSections } from "@/config/dashboard-nav";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { handleLogout } from "@/helpers/handelLogout";
+import { useInboxCounts } from "@/hooks/use-inbox";
 
 interface DashboardSidebarProps {
   onLogout?: () => void;
@@ -79,13 +91,28 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
   };
 
   const sections = getNavSections(session);
+  // Live: refreshed whenever a realtime event changes the inbox.
+  const { data: inboxCounts } = useInboxCounts();
+  const badgeFor = (href: string, fallback?: string | number) =>
+    href === "/dashboard/inbox"
+      ? inboxCounts?.waiting || undefined
+      : href === "/dashboard/conversations"
+        ? inboxCounts?.mine || undefined
+        : fallback;
   const identity = getIdentity(session);
-  const isAgentOnly = session?.user.userType === "agent" && session?.user?.agent?.role === "AGENT";
+  const isAgentOnly =
+    session?.user.userType === "agent" &&
+    session?.user?.agent?.role === "AGENT";
 
   const content = (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       {/* Header */}
-      <div className={cn("flex items-center gap-2 px-4 py-4", collapsed && "justify-center px-2")}>
+      <div
+        className={cn(
+          "flex items-center gap-2 px-4 py-4",
+          collapsed && "justify-center px-2",
+        )}
+      >
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary font-semibold text-primary-foreground">
           P
         </div>
@@ -97,7 +124,9 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
               exit={{ opacity: 0, width: 0 }}
               className="overflow-hidden"
             >
-              <p className="whitespace-nowrap text-sm font-semibold leading-none">PulseDesk</p>
+              <p className="whitespace-nowrap text-sm font-semibold leading-none">
+                PulseDesk
+              </p>
               <p className="mt-0.5 whitespace-nowrap text-xs text-sidebar-foreground/60">
                 {identity.subLabel}
               </p>
@@ -119,10 +148,12 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
             )}
             <div className="flex flex-col gap-0.5">
               {section.items.map((item) => {
+                const badge = badgeFor(item.href, item.badge);
                 const active =
                   item.href === "/dashboard"
                     ? pathname === "/dashboard"
-                    : pathname === item.href || pathname.startsWith(item.href + "/");
+                    : pathname === item.href ||
+                      pathname.startsWith(item.href + "/");
 
                 const link = (
                   <Link
@@ -137,13 +168,16 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
                     )}
                   >
                     <item.icon className="h-4 w-4 shrink-0" />
-                    {!collapsed && <span className="truncate">{item.title}</span>}
-                    {!collapsed && item.badge != null && (
+                    {!collapsed && (
+                      <span className="truncate">{item.title}</span>
+                    )}
+                    {!collapsed && badge != null && (
                       <Badge
                         variant="secondary"
                         className="ml-auto h-5 min-w-5 justify-center rounded-full px-1 text-[10px]"
+                        aria-label={`${badge} ${item.href === "/dashboard/inbox" ? "waiting" : "open"}`}
                       >
-                        {item.badge}
+                        {badge}
                       </Badge>
                     )}
                   </Link>
@@ -193,15 +227,23 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
                 )}
               >
                 <Avatar className="h-8 w-8 shrink-0">
-                  <AvatarFallback className="text-xs">{getInitials(identity?.name as string)}</AvatarFallback>
+                  <AvatarFallback className="text-xs">
+                    {getInitials(identity?.name as string)}
+                  </AvatarFallback>
                 </Avatar>
                 {!collapsed && (
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium leading-none">{identity.name}</p>
-                    <p className="mt-1 truncate text-xs text-sidebar-foreground/55">{identity.email}</p>
+                    <p className="truncate text-sm font-medium leading-none">
+                      {identity.name}
+                    </p>
+                    <p className="mt-1 truncate text-xs text-sidebar-foreground/55">
+                      {identity.email}
+                    </p>
                   </div>
                 )}
-                {!collapsed && <MoreHorizontal className="h-4 w-4 text-sidebar-foreground/50" />}
+                {!collapsed && (
+                  <MoreHorizontal className="h-4 w-4 text-sidebar-foreground/50" />
+                )}
               </button>
             }
           />
@@ -211,13 +253,19 @@ export function DashboardSidebar({ className }: DashboardSidebarProps) {
               <p className="text-xs text-muted-foreground">{identity.email}</p>
               <Badge
                 variant="outline"
-                className={cn("mt-2 text-[10px]", ROLE_STYLES[identity.roleLabel as string])}
+                className={cn(
+                  "mt-2 text-[10px]",
+                  ROLE_STYLES[identity.roleLabel as string],
+                )}
               >
                 {identity.roleLabel}
               </Badge>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="text-destructive focus:text-destructive"
+            >
               <LogOut className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>

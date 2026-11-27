@@ -1,7 +1,14 @@
-import React from "react";
+import { Suspense } from "react";
+import { InboxView } from "@/components/dashboard/inbox/inbox-view";
 
-const InboxPage = () => {
-  return <div>InboxPage</div>;
-};
-
-export default InboxPage;
+export default function InboxPage() {
+  return (
+    <Suspense>
+      <InboxView
+        title="Inbox"
+        description="Claim waiting chats, reply live and resolve them."
+        views={["waiting", "mine", "all", "resolved"]}
+      />
+    </Suspense>
+  );
+}

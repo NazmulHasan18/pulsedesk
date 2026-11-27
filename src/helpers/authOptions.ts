@@ -6,6 +6,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
+// Refresh when less than this is left. It must be longer than the
+// SessionProvider refetchInterval (4 min), so a periodic session read always
+// lands inside the window and the token never runs out between two reads.
+const REFRESH_MARGIN_MS = 5 * 60 * 1000;
+
 async function refreshAccessToken(refreshToken: string) {
   const res = await fetch(`${API_URL}/auth/refresh-token`, {
     method: "POST",
@@ -75,12 +80,12 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      // Subsequent requests: token still valid, pass it through
-      if (Date.now() < (token.accessTokenExpires as number) - 10_000) {
+      // Subsequent requests: token still has time left, pass it through
+      if (Date.now() < (token.accessTokenExpires as number) - REFRESH_MARGIN_MS) {
         return token;
       }
 
-      // Expired: refresh
+      // About to expire (or already expired): refresh
       try {
         const newAccessToken = await refreshAccessToken(token.refreshToken as string);
         token.accessToken = newAccessToken;

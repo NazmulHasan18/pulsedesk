@@ -4,6 +4,18 @@ type FetchOptions = RequestInit & {
   token?: string;
 };
 
+// Carries the HTTP status, so callers can tell "token expired" (401) from
+// other failures. Still an Error, so `err instanceof Error` keeps working.
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 export async function fetcher<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
   const { token, headers, ...rest } = options;
 
@@ -21,7 +33,7 @@ export async function fetcher<T>(endpoint: string, options: FetchOptions = {}): 
   if (!response.ok) {
     const error = await response.json().catch(() => null);
 
-    throw new Error(error?.message || "Something went wrong");
+    throw new ApiError(error?.message || "Something went wrong", response.status);
   }
 
   return response.json();
